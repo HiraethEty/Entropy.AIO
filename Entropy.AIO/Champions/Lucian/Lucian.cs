@@ -46,7 +46,7 @@
 
 			};
 
-			var menuList = new List<Menu>
+			var menuList = new []
 			{
 				combo,
 				harass,
