@@ -6,7 +6,7 @@
 	using SDK.UI;
 	using SDK.UI.Components;
 
-	sealed class Lucian : Champion
+	internal sealed class Lucian : Champion
 	{
 		public Lucian()
 		{

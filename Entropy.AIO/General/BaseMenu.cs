@@ -4,7 +4,7 @@
 	using SDK.UI;
 	using SDK.UI.Components;
 
-	static class BaseMenu
+	internal static class BaseMenu
 	{
 		public static Menu Root { get; private set; }
 

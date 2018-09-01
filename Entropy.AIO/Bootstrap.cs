@@ -1,9 +1,8 @@
 ﻿namespace Entropy.AIO
 {
-	using System;
 	using General;
 
-	static class Bootstrap
+	internal static class Bootstrap
 	{
 		public static void Initialize()
 		{

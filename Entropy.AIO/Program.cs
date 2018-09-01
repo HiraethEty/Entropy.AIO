@@ -3,9 +3,9 @@
 	using SDK.Events;
 	using SDK.Utils;
 
-	static class Program
+	internal static class Program
 	{
-		private static void Main(string[] args)
+		private static void Main()
 		{
 			Loading.OnLoadingComplete += () =>
 				{

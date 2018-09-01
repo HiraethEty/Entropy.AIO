@@ -4,7 +4,7 @@
 	using System.Reflection;
 	using ToolKit;
 
-	static class ChampionLoader
+	internal static class ChampionLoader
 	{
 		public static void Initialize()
 		{
