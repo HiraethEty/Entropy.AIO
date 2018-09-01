@@ -46,14 +46,16 @@
 
 			};
 
-			foreach (var x in new List<Menu>
+			var menuList = new List<Menu>
 			{
 				combo,
 				harass,
 				laneClear,
 				misc,
 				drawing
-			})
+			};
+
+			foreach (var x in menuList)
 			{
 				BaseMenu.Root.Add(x);
 			}
