@@ -1,20 +1,19 @@
 ﻿namespace Entropy.AIO.Champions.Lucian
 {
-	using System.Collections.Generic;
 	using General;
 	using SDK.Caching;
 	using SDK.Orbwalking;
 	using SDK.UI;
 	using SDK.UI.Components;
 
-	class Lucian : Champion
+	sealed class Lucian : Champion
 	{
 		public Lucian()
 		{
 			Orbwalker.OnPostAttack += PostAttack;
 		}
 
-		protected sealed override void LoadMenu()
+		protected override void LoadMenu()
 		{
 			var combo = new Menu("combo", "Combo")
 			{
@@ -25,10 +24,12 @@
 				new MenuBool("r", "R"),
 				new Menu("rWhitelist", "R Whitelist")
 			};
+
 			foreach (var enemy in ObjectCache.EnemyHeroes)
 			{
 				combo["rWhitelist"].As<Menu>().Add(new MenuBool($"r{enemy.CharName}", $"R on {enemy.CharName}"));
 			}
+
 			var harass = new Menu("harass", "Harass")
 			{
 
@@ -46,7 +47,7 @@
 
 			};
 
-			var menuList = new []
+			var menuList = new[]
 			{
 				combo,
 				harass,
@@ -55,13 +56,13 @@
 				drawing
 			};
 
-			foreach (var x in menuList)
+			foreach (var menu in menuList)
 			{
-				BaseMenu.Root.Add(x);
+				BaseMenu.Root.Add(menu);
 			}
 		}
 
-		protected sealed override void LoadSpells()
+		protected override void LoadSpells()
 		{
 		}
 

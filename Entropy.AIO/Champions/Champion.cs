@@ -1,4 +1,5 @@
-﻿namespace Entropy.AIO.Champions
+﻿// ReSharper disable VirtualMemberCallInConstructor
+namespace Entropy.AIO.Champions
 {
 	using SDK.Events;
 
