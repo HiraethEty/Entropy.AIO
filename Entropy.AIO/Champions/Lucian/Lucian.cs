@@ -7,7 +7,6 @@
 	using SDK.Extensions.Objects;
 	using SDK.Geometry;
 	using SDK.Orbwalking;
-	using SDK.Orbwalking.EventArgs;
 	using SDK.Spells;
 	using Spells;
 	using Champion = Champion;
@@ -56,37 +55,6 @@
 			if (IsCulling())
 			{
 				return;
-			}
-
-			switch (Orbwalker.Mode)
-			{
-				case OrbwalkingMode.Combo:
-					//Combo();
-					break;
-
-				case OrbwalkingMode.LaneClear:
-					//LaneClear();
-					break;
-
-				case OrbwalkingMode.Harass:
-					//Harass();
-					break;
-			}
-		}
-
-		public override void OnPostAttack(OnPostAttackEventArgs args)
-		{
-			switch (Orbwalker.Mode)
-			{
-				case OrbwalkingMode.Combo:
-					//Weaving(args);
-					break;
-
-				case OrbwalkingMode.LaneClear:
-					//Laneclear(args);
-					//Jungleclear(args);
-					//Buildingclear(args);
-					break;
 			}
 		}
 
