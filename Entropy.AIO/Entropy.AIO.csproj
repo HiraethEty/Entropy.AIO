@@ -38,8 +38,9 @@
     <Reference Include="Entropy.Sandbox">
       <HintPath>D:\Entropy\System\Entropy.Sandbox.dll</HintPath>
     </Reference>
-    <Reference Include="Entropy.SDK">
-      <HintPath>D:\Entropy\System\Entropy.SDK.dll</HintPath>
+    <Reference Include="Entropy.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a9dd01c7a904d443, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Entropy.SDK\Build\Debug\Entropy.SDK.dll</HintPath>
     </Reference>
     <Reference Include="Entropy.ToolKit">
       <HintPath>D:\Entropy\System\Entropy.ToolKit.dll</HintPath>
@@ -73,7 +74,7 @@
     <Compile Include="General\ChampionLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\Temp\AntiGapcloser.cs" />
+    <Compile Include="Utility\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
