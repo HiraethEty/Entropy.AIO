@@ -4,6 +4,7 @@ namespace Entropy.AIO.Champions
 {
 	using General;
 	using Lucian.Drawings;
+	using Lucian.Spells;
 	using SDK.Events;
 	using SDK.Orbwalking.EventArgs;
 	using SDK.Spells;
@@ -16,10 +17,10 @@ namespace Entropy.AIO.Champions
 			this.LoadSpells();
 		}
 
-		internal Spell Q { get; set; }
-		internal Spell W { get; set; }
-		internal Spell E { get; set; }
-		internal Spell R { get; set; }
+		internal Q Q { get; set; }
+		internal W W { get; set; }
+		internal E E { get; set; }
+		internal R R { get; set; }
 		internal Drawing Drawing { get; set; }
 
 		internal static Spell[] Spells { get; set; }

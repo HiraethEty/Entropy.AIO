@@ -25,7 +25,7 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 		protected override void SubscribeToEvents()
 		{
 			Tick.OnTick += this.OnTick;
-			Orbwalker.OnPostAttack += OnPostAttack;
+			//Orbwalker.OnPostAttack += OnPostAttack;
 		}
 
 		public override void OnTick(EntropyEventArgs args)
