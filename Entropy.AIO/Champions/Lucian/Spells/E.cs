@@ -31,7 +31,7 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 		public override void OnTick(EntropyEventArgs args)
 		{
 			if (!this.Spell.Ready ||
-			    !BaseMenu.Root["e"]["combo"]["eengage"].Enabled)
+			    !BaseMenu.Root["combo"]["eengage"].Enabled)
 			{
 				return;
 			}
@@ -57,7 +57,7 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 						return;
 					}
 
-					switch (BaseMenu.Root["combo"]["e"]["mode"].Value)
+					switch (BaseMenu.Root["combo"]["e"].Value)
 					{
 						case 0:
 							this.DynamicE();
