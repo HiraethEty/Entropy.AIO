@@ -1,5 +1,6 @@
 ﻿namespace Entropy.AIO.Champions.Lucian
 {
+	using System.Collections.Generic;
 	using System.Linq;
 	using General;
 	using SDK.Caching;
@@ -24,6 +25,8 @@
 		private Spell ExtendedQ { get; set; }
 		public static Damage DamageValues { get; set; }
 
+		public static List<Spell> Spells { get; set; }
+
 		public Lucian()
 		{
 			Tick.OnTick += this.OnTick;
@@ -33,6 +36,16 @@
 			Renderer.OnRender += this.OnRender;
 
 			DamageValues = new Damage(new[] {this.Q, this.W, this.E, this.R});
+			Spells = new List<Spell>
+			{
+				this.Q,
+				this.ExtendedQ,
+				this.W,
+				this.E,
+				this.R
+			};
+
+			DamageValues = new LucianDamage(new[] {this.Q, this.W, this.E, this.R});
 		}
 
 		/// <summary>

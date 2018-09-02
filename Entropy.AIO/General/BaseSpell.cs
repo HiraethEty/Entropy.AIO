@@ -1,4 +1,6 @@
-﻿namespace Entropy.AIO.General
+﻿// ReSharper disable VirtualMemberCallInConstructor
+
+namespace Entropy.AIO.General
 {
 	using SDK.Events;
 	using SDK.Orbwalking.EventArgs;
@@ -10,8 +12,8 @@
 
 		protected BaseSpell()
 		{
-			SetSpellData();
-			SubscribeToEvents();
+			this.SetSpellData();
+			this.SubscribeToEvents();
 		}
 
 		protected abstract void SetSpellData();
