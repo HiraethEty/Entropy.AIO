@@ -3,13 +3,14 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using General;
-	using Utility;
 	using SDK.Caching;
 	using SDK.Damage;
 	using SDK.Extensions.Geometry;
 	using SDK.Extensions.Objects;
 	using SDK.Orbwalking;
 	using SDK.TS;
+	using SharpDX;
+	using Utilities = Utility.Utilities;
 
 	internal static class Extensions
 	{
@@ -334,6 +335,24 @@
 		public static List<AIMinionClient> GetSmallJungleMinionsTargetsInRange(float range)
 		{
 			return ObjectCache.SmallJungleMinions.Where(m => m.IsValidSpellTarget(range)).ToList();
+		}
+
+		public static float Distance(
+			this Vector2 point,
+			Vector2 segmentStart,
+			Vector2 segmentEnd,
+			bool onlyIfOnSegment = false,
+			bool squared = false)
+		{
+			var objects = point.ProjectOn(segmentStart, segmentEnd);
+
+			if (objects.IsOnSegment || onlyIfOnSegment == false)
+			{
+				return squared
+					? Vector2.DistanceSquared(objects.SegmentPoint, point)
+					: Vector2.Distance(objects.SegmentPoint, point);
+			}
+			return float.MaxValue;
 		}
 
 		#endregion
