@@ -45,7 +45,7 @@
 				this.R
 			};
 
-			DamageValues = new LucianDamage(new[] {this.Q, this.W, this.E, this.R});
+			DamageValues = new Damage(new[] {this.Q, this.W, this.E, this.R});
 		}
 
 		/// <summary>
