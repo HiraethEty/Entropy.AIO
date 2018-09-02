@@ -16,6 +16,7 @@
 	using SDK.UI;
 	using SDK.UI.Components;
 	using SDK.Utils;
+	using Spells;
 	using Champion = Champion;
 
 	internal sealed class Lucian : Champion
@@ -188,7 +189,7 @@
 
 		protected override void LoadSpells()
 		{
-			this.Q = new Spell(SpellSlot.Q, 550f);
+			this.Q = new Q().Spell;
 			this.ExtendedQ = new Spell(SpellSlot.Q, this.Q.Range + 400f - LocalPlayer.Instance.BoundingRadius);
 			this.W = new Spell(SpellSlot.W, 900f);
 			this.E = new Spell(SpellSlot.E, LocalPlayer.Instance.GetAutoAttackRange() + 425f);
