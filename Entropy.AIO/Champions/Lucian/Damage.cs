@@ -1,19 +1,19 @@
 ﻿namespace Entropy.AIO.Champions.Lucian
 {
-	using General;
 	using SDK.Damage;
 	using SDK.Extensions.Objects;
 	using SDK.Spells;
+	using General;
 
-	internal class LucianDamage : BaseDamage
+	internal class Damage : BaseDamage
 	{
 		private readonly Spell[] Spells;
-		public LucianDamage(Spell[] spells)
+		public Damage(Spell[] spells)
 		{
 			this.Spells = spells;
 		}
 
-		public override float QDamage(AIBaseClient target)
+		public override float Q(AIBaseClient target)
 		{
 			var qLevel = this.Spells[0].Level;
 
@@ -24,7 +24,7 @@
 			return LocalPlayer.Instance.CalculateDamage(target, DamageType.Physical, qBaseDamage);
 		}
 
-		public override float WDamage(AIBaseClient target)
+		public override float W(AIBaseClient target)
 		{
 			var wLevel = this.Spells[1].Level;
 

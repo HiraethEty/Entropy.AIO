@@ -22,7 +22,7 @@
 	internal sealed class Lucian : Champion
 	{
 		private Spell ExtendedQ { get; set; }
-		private LucianDamage DamageValues { get; }
+		public static Damage DamageValues { get; set; }
 
 		public Lucian()
 		{
@@ -32,7 +32,7 @@
 			Orbwalker.OnPostAttack += this.OnPostAttack;
 			Renderer.OnRender += this.OnRender;
 
-			this.DamageValues = new LucianDamage(new[] {this.Q, this.W, this.E, this.R});
+			DamageValues = new Damage(new[] {this.Q, this.W, this.E, this.R});
 		}
 
 		/// <summary>
@@ -190,17 +190,10 @@
 		protected override void LoadSpells()
 		{
 			this.Q = new Q().Spell;
-			this.ExtendedQ = new Spell(SpellSlot.Q, this.Q.Range + 400f - LocalPlayer.Instance.BoundingRadius);
-			this.W = new Spell(SpellSlot.W, 900f);
-			this.E = new Spell(SpellSlot.E, LocalPlayer.Instance.GetAutoAttackRange() + 425f);
-			this.R = new Spell(SpellSlot.R, 1150f);
-
-			this.ExtendedQ.SetSkillshot(0.25f, 65f, float.MaxValue, collision: false);
-			this.W.SetSkillshot(0.25f, 80f, 1600f, collision: false);
-			this.R.SetSkillshot(0.25f, 110f, 2500f, collision: false);
-
-			this.Q.SetCustomDamageCalculateFunction(this.DamageValues.QDamage);
-			this.W.SetCustomDamageCalculateFunction(this.DamageValues.WDamage);
+			this.ExtendedQ = new ExtendedQ().Spell;
+			this.W = new W().Spell;
+			this.E = new E().Spell;
+			this.R = new R().Spell;
 		}
 
 		public override void OnTick(EntropyEventArgs args)

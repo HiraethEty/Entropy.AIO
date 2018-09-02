@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entropy.AIO.General
+﻿namespace Entropy.AIO.General
 {
 	using SDK.Events;
 	using SDK.Orbwalking.EventArgs;
 	using SDK.Spells;
 
-	abstract class BaseSpell
+	internal abstract class BaseSpell
 	{
 		public Spell Spell { get; protected set; }
 

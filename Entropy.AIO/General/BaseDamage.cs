@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entropy.AIO.General
+﻿namespace Entropy.AIO.General
 {
-	using SDK.Spells;
-
-	abstract class BaseDamage
+	internal abstract class BaseDamage
 	{
-		public virtual float QDamage(AIBaseClient target) => 0f;
-		public virtual float WDamage(AIBaseClient target) => 0f;
-		public virtual float EDamage(AIBaseClient target) => 0f;
-		public virtual float RDamage(AIBaseClient target) => 0f;
+		public virtual float Q(AIBaseClient target) => 0f;
+		public virtual float W(AIBaseClient target) => 0f;
+		public virtual float E(AIBaseClient target) => 0f;
+		public virtual float R(AIBaseClient target) => 0f;
 	}
 }

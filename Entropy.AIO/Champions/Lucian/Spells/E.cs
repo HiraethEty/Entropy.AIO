@@ -1,12 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entropy.SDK.Extensions.Objects;
 
 namespace Entropy.AIO.Champions.Lucian.Spells
 {
-	class E
+	using General;
+	using SDK.Events;
+	using SDK.Spells;
+
+	sealed class E : BaseSpell
 	{
+		protected override void SetSpellData()
+		{
+			this.Spell = new Spell(SpellSlot.E, LocalPlayer.Instance.GetAutoAttackRange() + 425f);
+		}
+
+		protected override void SubscribeToEvents()
+		{
+			Tick.OnTick += this.OnTick;
+		}
+
+		public override void OnTick(EntropyEventArgs args)
+		{
+			this.Spell.Cast(/*target*/);
+		}
 	}
 }
