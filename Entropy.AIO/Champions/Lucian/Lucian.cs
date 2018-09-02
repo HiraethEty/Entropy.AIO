@@ -1,13 +1,9 @@
 ﻿namespace Entropy.AIO.Champions.Lucian
 {
 	using Drawings;
-	using SDK.Events;
-	using SDK.Extensions.Geometry;
-	using SDK.Extensions.Objects;
-	using SDK.Geometry;
+	using Misc;
 	using SDK.Orbwalking;
 	using SDK.Orbwalking.EventArgs;
-	using SDK.Spells;
 	using Spells;
 	using Champion = Champion;
 
@@ -23,19 +19,6 @@
 			this.Drawing = new Drawing(Spells);
 			Orbwalker.OnPostAttack += this.OnPostAttack;
 		}
-
-		/// <summary>
-		///     Returns true if the player is using the ultimate.
-		/// </summary>
-		public static bool IsCulling() => LocalPlayer.Instance.HasBuff("LucianR");
-
-		/// <summary>
-		///     The Q Rectangle.
-		/// </summary>
-		/// <param name="unit">The unit.</param>
-		public static Rectangle QRectangle(AIBaseClient unit) => new Rectangle(LocalPlayer.Instance.Position,
-		                                                                LocalPlayer.Instance.Position.Extend(unit.Position, Spells[1].Range),
-		                                                                Spells[1].Width);
 
 		protected override void LoadSpells()
 		{
@@ -53,7 +36,7 @@
 				return;
 			}
 
-			if (IsCulling())
+			if (Definitions.IsCulling())
 			{
 				return;
 			}
@@ -76,7 +59,5 @@
 				this.W.OnPostAttack(args);
 			}
 		}
-
-		public override void OnNewGapcloser(Gapcloser.GapcloserArgs args) { }
 	}
 }

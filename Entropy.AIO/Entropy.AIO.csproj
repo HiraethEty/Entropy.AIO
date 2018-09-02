@@ -71,15 +71,21 @@
   <ItemGroup>
     <Compile Include="Bootstrap.cs" />
     <Compile Include="Champions\Champion.cs" />
-    <Compile Include="Champions\Lucian\Damage.cs" />
+    <Compile Include="Champions\Lucian\Misc\Damage.cs" />
     <Compile Include="Champions\Lucian\Drawings\Drawing.cs" />
     <Compile Include="Champions\Lucian\Lucian.cs" />
     <Compile Include="Champions\Lucian\Menu\Menu.cs" />
+    <Compile Include="Champions\Lucian\Misc\Definitions.cs" />
     <Compile Include="Champions\Lucian\Spells\E.cs" />
     <Compile Include="Champions\Lucian\Spells\ExtendedQ.cs" />
     <Compile Include="Champions\Lucian\Spells\Q.cs" />
     <Compile Include="Champions\Lucian\Spells\R.cs" />
     <Compile Include="Champions\Lucian\Spells\W.cs" />
+    <Compile Include="Champions\Vayne\Spells\E.cs" />
+    <Compile Include="Champions\Vayne\Spells\Q.cs" />
+    <Compile Include="Champions\Vayne\Spells\R.cs" />
+    <Compile Include="Champions\Vayne\Spells\W.cs" />
+    <Compile Include="Champions\Vayne\Vayne.cs" />
     <Compile Include="Enumerations\Enumerations.cs" />
     <Compile Include="General\BaseDamage.cs" />
     <Compile Include="General\BaseLogic.cs" />
@@ -96,6 +102,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Champions\Vayne\Drawings\" />
+    <Folder Include="Champions\Vayne\Menu\" />
+    <Folder Include="Champions\Vayne\Misc\" />
     <Folder Include="Managers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

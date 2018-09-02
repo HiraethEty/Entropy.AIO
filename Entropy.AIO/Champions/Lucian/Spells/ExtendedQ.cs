@@ -1,16 +1,16 @@
-﻿using System.Linq;
-using Entropy.AIO.Utilities;
-using Entropy.AIO.Utility;
-using Entropy.SDK.Caching;
-using Entropy.SDK.Damage;
-using Entropy.SDK.Extensions.Objects;
-using Entropy.SDK.Orbwalking;
-
-namespace Entropy.AIO.Champions.Lucian.Spells
+﻿namespace Entropy.AIO.Champions.Lucian.Spells
 {
+	using System.Linq;
 	using General;
+	using Misc;
+	using SDK.Caching;
+	using SDK.Damage;
 	using SDK.Events;
+	using SDK.Extensions.Objects;
+	using SDK.Orbwalking;
 	using SDK.Spells;
+	using Utilities;
+	using Utility;
 
 	internal sealed class ExtendedQ : BaseSpell
 	{
@@ -40,13 +40,14 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 
 			// Extended Q Killsteal
 			foreach (var target in ObjectCache.EnemyHeroes
-				.Where(t =>
-					t.IsValidTarget(this.Spell.Range) &&
-					!Invulnerable.IsInvulnerable(t, DamageType.Physical, damage: this.Spell.GetDamage(t)) &&
-					this.Spell.GetDamage(t) >= t.GetRealHealth(DamageType.Physical)))
+			                                  .Where(t =>
+				                                         t.IsValidTarget(this.Spell.Range) &&
+				                                         !Invulnerable.IsInvulnerable(t, DamageType.Physical, damage: this.Spell.GetDamage(t)) &&
+				                                         this.Spell.GetDamage(t) >= t.GetRealHealth(DamageType.Physical)))
 			{
 				foreach (var minion in ObjectCache.EnemyLaneMinions
-					.Where(m => m.IsValidTarget(this.Spell.Range) && Lucian.QRectangle(m).IsInsidePolygon(this.Spell.GetPrediction(target).CastPosition)))
+				                                  .Where(m => m.IsValidTarget(this.Spell.Range) &&
+				                                              Definitions.QRectangle(m).IsInsidePolygon(this.Spell.GetPrediction(target).CastPosition)))
 				{
 					this.Spell.CastOnUnit(minion);
 					break;
@@ -55,24 +56,25 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 
 			// Extended Q Harass
 			var extendedQHarass = BaseMenu.Root["harass"]["extendedQ"];
-			if (extendedQHarass.Enabled &&
-				LocalPlayer.Instance.MPPercent() > ManaManager.GetNeededMana(this.Spell.Slot, extendedQHarass))
+			if (!extendedQHarass.Enabled || !(LocalPlayer.Instance.MPPercent() > ManaManager.GetNeededMana(this.Spell.Slot, extendedQHarass)))
 			{
-				var normalQ = Champion.Spells[0];
-				foreach (var target in Extensions.GetBestSortedTargetsInRange(this.Spell.Range).Where(t =>
-					!t.IsValidTarget(normalQ.Range) &&
-					BaseMenu.Root["harass"]["whitelist"]["extendedQ"][t.CharName.ToLower()].Enabled))
+				return;
+			}
+			var normalQ = Champion.Spells[0];
+			foreach (var target in Extensions.GetBestSortedTargetsInRange(this.Spell.Range)
+			                                 .Where(t =>
+				                                        !t.IsValidTarget(normalQ.Range) &&
+				                                        BaseMenu.Root["harass"]["whitelist"]["extendedQ"][t.CharName.ToLower()].Enabled))
+			{
+				foreach (var minion in Extensions.GetAllGenericUnitTargetsInRange(normalQ.Range))
 				{
-					foreach (var minion in Extensions.GetAllGenericUnitTargetsInRange(normalQ.Range))
+					if (!Definitions.QRectangle(minion).IsInsidePolygon(normalQ.GetPrediction(target).CastPosition))
 					{
-						if (!Lucian.QRectangle(minion).IsInsidePolygon(normalQ.GetPrediction(target).CastPosition))
-						{
-							continue;
-						}
-
-						this.Spell.CastOnUnit(minion);
-						break;
+						continue;
 					}
+
+					this.Spell.CastOnUnit(minion);
+					break;
 				}
 			}
 		}

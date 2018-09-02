@@ -10,6 +10,7 @@ using Entropy.SDK.Utils;
 namespace Entropy.AIO.Champions.Lucian.Spells
 {
 	using General;
+	using Misc;
 	using SDK.Events;
 	using SDK.Spells;
 
@@ -48,7 +49,7 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 			if (this.Spell.Ready &&
 			    BaseMenu.Root["combo"]["bool"].Enabled)
 			{
-				if (!Lucian.IsCulling() &&
+				if (!Definitions.IsCulling() &&
 				    BaseMenu.Root["combo"]["key"].Enabled)
 				{
 					var bestTarget = ObjectCache.EnemyHeroes
@@ -75,7 +76,7 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 			}
 
 			// Stop Semi-Automatic R
-			if (Lucian.IsCulling() &&
+			if (Definitions.IsCulling() &&
 			    !BaseMenu.Root["combo"]["key"].Enabled)
 			{
 				this.Spell.Cast();
