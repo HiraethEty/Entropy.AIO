@@ -1,52 +1,47 @@
-﻿using Entropy.SDK.Damage;
-using Entropy.SDK.Enumerations;
-using Entropy.SDK.Extensions;
-using Entropy.SDK.Extensions.Geometry;
-using Entropy.SDK.Geometry;
-using Entropy.SDK.Utils;
-
-namespace Entropy.AIO.Champions.Lucian
+﻿namespace Entropy.AIO.Champions.Lucian
 {
 	using System.Linq;
 	using General;
 	using SDK.Caching;
+	using SDK.Damage;
+	using SDK.Enumerations;
 	using SDK.Events;
+	using SDK.Extensions;
+	using SDK.Extensions.Geometry;
 	using SDK.Extensions.Objects;
+	using SDK.Geometry;
 	using SDK.Orbwalking;
 	using SDK.Orbwalking.EventArgs;
 	using SDK.Spells;
 	using SDK.UI;
 	using SDK.UI.Components;
+	using SDK.Utils;
+	using Champion = Champions.Champion;
 
 	internal sealed class Lucian : Champion
 	{
 		private Spell ExtendedQ { get; set; }
 
+		public Lucian()
+		{
+			Tick.OnTick += this.OnTick;
+			new CustomTick(2000).OnTick += this.OnCustomTick;
+			Gapcloser.OnNewGapcloser += this.OnNewGapcloser;
+			Orbwalker.OnPostAttack += this.OnPostAttack;
+			Renderer.OnRender += this.OnRender;
+		}
+
 		/// <summary>
 		///     Returns true if the player is using the ultimate.
 		/// </summary>
-		public bool IsCulling()
-		{
-			return LocalPlayer.Instance.HasBuff("LucianR");
-		}
+		private static bool IsCulling() => LocalPlayer.Instance.HasBuff("LucianR");
 
 		/// <summary>
 		///     The Q Rectangle.
 		/// </summary>
 		/// <param name="unit">The unit.</param>
 		public Rectangle QRectangle(AIBaseClient unit)
-		{
-			return new Rectangle(LocalPlayer.Instance.Position, LocalPlayer.Instance.Position.Extend(unit.Position, ExtendedQ.Range), ExtendedQ.Width);
-		}
-
-		public Lucian()
-		{
-			Tick.OnTick += OnTick;
-			new CustomTick(2000).OnTick += OnCustomTick;
-			Gapcloser.OnNewGapcloser += OnNewGapcloser;
-			Orbwalker.OnPostAttack += OnPostAttack;
-			Renderer.OnRender += OnRender;
-		}
+			=> new Rectangle(LocalPlayer.Instance.Position, LocalPlayer.Instance.Position.Extend(unit.Position, this.ExtendedQ.Range), this.ExtendedQ.Width);
 
 		protected override void LoadMenu()
 		{
@@ -54,7 +49,12 @@ namespace Entropy.AIO.Champions.Lucian
 			{
 				new MenuBool("q", "Use Q"),
 				new MenuBool("w", "Use W"),
-				new MenuList("e", "Use E", new []{"Dynamic Range", "Always Short", "Always Long", "Don't use E"}).SetToolTip("Always directed to Cursor"),
+				new MenuList("e",
+				             "Use E",
+				             new[]
+				             {
+					             "Dynamic Range", "Always Short", "Always Long", "Don't use E"
+				             }).SetToolTip("Always directed to Cursor"),
 				new MenuBool("normalR", "Use R if all spells on CD", false).SetToolTip("It will stop as soon as one spell returns ready to use, if the enemy is in its range."),
 				new MenuBool("essenceR", "Use R to proc Essence Reaver").SetToolTip("If you have Essence Reaver, uses R and immediately stops it to make full use of its passive."),
 				new MenuBool("bool", "Use Semi-Automatic R"),
@@ -136,8 +136,8 @@ namespace Entropy.AIO.Champions.Lucian
 			};
 
 			foreach (var enemy in ObjectCache.EnemyHeroes.Where(enemy =>
-				enemy.IsMelee &&
-				Gapcloser.Spells.Any(spell => spell.Champion == enemy.GetChampion())))
+				                                                    enemy.IsMelee &&
+				                                                    Gapcloser.Spells.Any(spell => spell.Champion == enemy.GetChampion())))
 			{
 				var subAntiGapcloserMenu = new Menu(enemy.CharName.ToLower(), enemy.CharName);
 				{
@@ -191,11 +191,11 @@ namespace Entropy.AIO.Champions.Lucian
 
 		protected override void LoadSpells()
 		{
-			Q = new Spell(SpellSlot.Q, 550f);
-			ExtendedQ = new Spell(SpellSlot.Q, Q.Range + 400f - LocalPlayer.Instance.BoundingRadius);
-			W = new Spell(SpellSlot.W, 900f);
-			E = new Spell(SpellSlot.E, LocalPlayer.Instance.GetAutoAttackRange() + 425f);
-			R = new Spell(SpellSlot.R, 1150f);
+			this.Q = new Spell(SpellSlot.Q, 550f);
+			this.ExtendedQ = new Spell(SpellSlot.Q, this.Q.Range + 400f - LocalPlayer.Instance.BoundingRadius);
+			this.W = new Spell(SpellSlot.W, 900f);
+			this.E = new Spell(SpellSlot.E, LocalPlayer.Instance.GetAutoAttackRange() + 425f);
+			this.R = new Spell(SpellSlot.R, 1150f);
 		}
 
 		public override void OnTick(EntropyEventArgs args)
@@ -205,7 +205,7 @@ namespace Entropy.AIO.Champions.Lucian
 				return;
 			}
 
-			Automatic();
+			this.Automatic();
 
 			if (IsCulling())
 			{
@@ -230,10 +230,7 @@ namespace Entropy.AIO.Champions.Lucian
 
 		public override void OnCustomTick(EntropyEventArgs args)
 		{
-			if (LocalPlayer.Instance.IsDead)
-			{
-				return;
-			}
+			if (LocalPlayer.Instance.IsDead) { }
 
 			//KillSteal();
 		}
@@ -244,56 +241,44 @@ namespace Entropy.AIO.Champions.Lucian
 			    BaseMenu.Root["combo"]["key"].Enabled)
 			{
 				DelayAction.Queue(() =>
-					{
-						Orbwalker.Move(Hud.CursorPositionUnclipped);
-					}, 100 + EnetClient.Ping);
+					                  {
+						                  Orbwalker.Move(Hud.CursorPositionUnclipped);
+					                  },
+				                  100 + EnetClient.Ping);
 			}
 
-			if (R.Ready &&
-			    BaseMenu.Root["combo"]["bool"].Enabled)
+			if (this.R.Ready && BaseMenu.Root["combo"]["bool"].Enabled)
 			{
-				if (!IsCulling() &&
-				    BaseMenu.Root["combo"]["key"].Enabled)
+				if (!IsCulling() && BaseMenu.Root["combo"]["key"].Enabled)
 				{
 					var bestTarget = ObjectCache.EnemyHeroes
-						.Where(t =>
-							BaseMenu.Root["combo"]["whitelists"]["semiAutomaticR"][t.CharName.ToLower()].Enabled &&
-							t.IsValidTarget() &&
-							!Invulnerable.IsInvulnerable(t, DamageType.Physical, false))
-						.MinBy(o => o.GetRealHealth(DamageType.Physical));
+					                            .Where(t =>
+						                                   BaseMenu.Root["combo"]["whitelists"]["semiAutomaticR"][t.CharName.ToLower()].Enabled &&
+						                                   t.IsValidTarget() &&
+						                                   !Invulnerable.IsInvulnerable(t, DamageType.Physical, false))
+					                            .MinBy(o => o.GetRealHealth(DamageType.Physical));
 
 					if (bestTarget != null)
 					{
-						if (W.Ready &&
-						    bestTarget.DistanceToPlayer() <= W.Range)
+						if (this.W.Ready && bestTarget.DistanceToPlayer() <= this.W.Range)
 						{
-							W.Cast(bestTarget.Position);
+							this.W.Cast(bestTarget.Position);
 						}
 
-						R.Cast(bestTarget.Position);
+						this.R.Cast(bestTarget.Position);
 					}
 				}
-				else if (IsCulling() &&
-				    !BaseMenu.Root["combo"]["key"].Enabled)
+				else if (IsCulling() && !BaseMenu.Root["combo"]["key"].Enabled)
 				{
-					R.Cast();
+					this.R.Cast();
 				}
 			}
 		}
 
-		public override void OnRender(EntropyEventArgs args)
-		{
+		public override void OnRender(EntropyEventArgs args) { }
 
-		}
+		public override void OnPostAttack(OnPostAttackEventArgs args) { }
 
-		public override void OnPostAttack(OnPostAttackEventArgs args)
-		{
-
-		}
-
-		public override void OnNewGapcloser(Gapcloser.GapcloserArgs args)
-		{
-			
-		}
+		public override void OnNewGapcloser(Gapcloser.GapcloserArgs args) { }
 	}
 }

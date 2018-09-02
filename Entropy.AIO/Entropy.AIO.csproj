@@ -40,7 +40,7 @@
     </Reference>
     <Reference Include="Entropy.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a9dd01c7a904d443, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Entropy.SDK\Build\Debug\Entropy.SDK.dll</HintPath>
+      <HintPath>..\..\..\..\Documents\Entropy-Dev\Entropy.SDK\Build\Release\Entropy.SDK.dll</HintPath>
     </Reference>
     <Reference Include="Entropy.ToolKit">
       <HintPath>D:\Entropy\System\Entropy.ToolKit.dll</HintPath>
@@ -70,6 +70,7 @@
     <Compile Include="Bootstrap.cs" />
     <Compile Include="Champions\Champion.cs" />
     <Compile Include="Champions\Lucian\Lucian.cs" />
+    <Compile Include="General\BaseLogic.cs" />
     <Compile Include="General\BaseMenu.cs" />
     <Compile Include="General\ChampionLoader.cs" />
     <Compile Include="Program.cs" />

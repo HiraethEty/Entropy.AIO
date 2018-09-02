@@ -1,10 +1,9 @@
-﻿using Entropy.AIO.Utility;
-
-namespace Entropy.AIO.General
+﻿namespace Entropy.AIO.General
 {
 	using SDK.Orbwalking;
 	using SDK.UI;
 	using SDK.UI.Components;
+	using Utility;
 
 	internal static class BaseMenu
 	{
@@ -19,7 +18,7 @@ namespace Entropy.AIO.General
 					new MenuBool("supportmode", "Support Mode", false),
 					new MenuSliderBool("disableaa", "Disable attacks in Combo / If Level >= x", false, 2, 2, 18),
 					new MenuBool("junglesmall", "Cast to small minions too in JungleClear", false),
-				
+
 					new Menu("stormrazor", "Stormrazor Menu")
 					{
 						new MenuSeperator("stormsep", "Stop AA'ing until it procs in:"),
@@ -28,7 +27,7 @@ namespace Entropy.AIO.General
 						new MenuBool("mixed", "Harass", false),
 						new MenuBool("lasthit", "Lasthit", false)
 					},
-				
+
 					new Menu("preservemana", "Preserve Mana Menu")
 					{
 						new MenuSeperator("separator", "Preserve Mana for:")
@@ -38,7 +37,7 @@ namespace Entropy.AIO.General
 					{
 						new MenuSeperator("separator", "Only works for inside-AA-range targets"),
 						new MenuSeperator("separator2", "0 = Don't limit.")
-					},
+					}
 				}
 			};
 

@@ -8,6 +8,7 @@
 		{
 			BaseMenu.Initialize();
 			ChampionLoader.Initialize();
+			BaseLogic.Initialize();
 		}
 	}
 }
