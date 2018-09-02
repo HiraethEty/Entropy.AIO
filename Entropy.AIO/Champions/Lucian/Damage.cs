@@ -16,11 +16,11 @@
 
 		private void SetDamageCalculations()
 		{
-			Champion.Spells[0].SetCustomDamageCalculateFunction(this.Q);
-			Champion.Spells[1].SetCustomDamageCalculateFunction(this.W);
+			Champion.Spells[0].SetCustomDamageCalculateFunction(this.QDamage);
+			Champion.Spells[1].SetCustomDamageCalculateFunction(this.WDamage);
 		}
 
-		public override float Q(AIBaseClient target)
+		public override float QDamage(AIBaseClient target)
 		{
 			var qLevel = this.Spells[0].Level;
 
@@ -31,7 +31,7 @@
 			return LocalPlayer.Instance.CalculateDamage(target, DamageType.Physical, qBaseDamage);
 		}
 
-		public override float W(AIBaseClient target)
+		public override float WDamage(AIBaseClient target)
 		{
 			var wLevel = this.Spells[1].Level;
 
