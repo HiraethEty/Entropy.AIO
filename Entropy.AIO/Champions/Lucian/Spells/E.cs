@@ -179,7 +179,7 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 
 		private void LaneClear()
 		{
-			var laneClearMenu = BaseMenu.Root["laneclear"]["e"];
+			var laneClearMenu = BaseMenu.Root["laneClear"]["e"];
 			if (laneClearMenu.Enabled &&
 			    LocalPlayer.Instance.MPPercent() > ManaManager.GetNeededMana(this.Spell.Slot, laneClearMenu))
 			{
@@ -196,7 +196,7 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 				return;
 			}
 
-			var jungleClearMenu = BaseMenu.Root["jungleclear"]["e"];
+			var jungleClearMenu = BaseMenu.Root["jungleClear"]["e"];
 			if (jungleClearMenu.Enabled &&
 				LocalPlayer.Instance.MPPercent() > ManaManager.GetNeededMana(this.Spell.Slot, jungleClearMenu))
 			{
