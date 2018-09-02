@@ -1,6 +1,5 @@
 ﻿namespace Entropy.AIO.Champions.Lucian
 {
-	using System.Collections.Generic;
 	using System.Linq;
 	using General;
 	using SDK.Caching;
@@ -16,7 +15,7 @@
 	using SDK.Spells;
 	using SDK.Utils;
 	using Spells;
-	using Champion = Champions.Champion;
+	using Champion = Champion;
 
 	internal sealed class Lucian : Champion
 	{
@@ -24,22 +23,7 @@
 
 		public Lucian()
 		{
-			Menu.Menu.LoadMenu();
-			Tick.OnTick += this.OnTick;
-			new CustomTick(2000).OnTick += this.OnCustomTick;
-			Gapcloser.OnNewGapcloser += this.OnNewGapcloser;
-			Orbwalker.OnPostAttack += this.OnPostAttack;
-			Renderer.OnRender += this.OnRender;
-
-			Spells = new []
-			{
-				this.Q,
-				this.ExtendedQ,
-				this.W,
-				this.E,
-				this.R
-			};
-
+			Spells = new []{this.Q,	this.ExtendedQ, this.W,	this.E,	this.R};
 			DamageValues = new Damage(Spells);
 		}
 
