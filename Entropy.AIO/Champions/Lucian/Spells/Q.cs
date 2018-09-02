@@ -9,7 +9,7 @@
 		protected override void SetSpellData()
 		{
 			this.Spell = new Spell(SpellSlot.Q, 550f);
-			this.Spell.SetCustomDamageCalculateFunction(Lucian.DamageValues.Q);
+			this.Spell.SetCustomDamageCalculateFunction(Champion.DamageValues.Q);
 		}
 
 		protected override void SubscribeToEvents()

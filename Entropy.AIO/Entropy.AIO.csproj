@@ -72,7 +72,7 @@
     <Compile Include="Champions\Champion.cs" />
     <Compile Include="Champions\Lucian\Damage.cs" />
     <Compile Include="Champions\Lucian\Lucian.cs" />
-    <Compile Include="Champions\Lucian\fMenu\LucianMenu.cs" />
+    <Compile Include="Champions\Lucian\Menu\Menu.cs" />
     <Compile Include="Champions\Lucian\Spells\E.cs" />
     <Compile Include="Champions\Lucian\Spells\ExtendedQ.cs" />
     <Compile Include="Champions\Lucian\Spells\Q.cs" />

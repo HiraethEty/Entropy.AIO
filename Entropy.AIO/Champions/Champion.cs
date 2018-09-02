@@ -2,6 +2,7 @@
 
 namespace Entropy.AIO.Champions
 {
+	using General;
 	using SDK.Events;
 	using SDK.Orbwalking.EventArgs;
 	using SDK.Spells;
@@ -12,14 +13,15 @@ namespace Entropy.AIO.Champions
 		internal Spell W { get; set; }
 		internal Spell E { get; set; }
 		internal Spell R { get; set; }
+		internal Spell[] Spells { get; set; }
+		internal static BaseDamage DamageValues { get; set; }
+		
 
 		protected Champion()
 		{
-			this.LoadMenu();
 			this.LoadSpells();
 		}
-
-		protected abstract void LoadMenu();
+		
 		protected abstract void LoadSpells();
 
 		public virtual void OnTick(EntropyEventArgs args) { }
