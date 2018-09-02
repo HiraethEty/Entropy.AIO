@@ -24,6 +24,7 @@
 
 		public Lucian()
 		{
+			Menu.Menu.LoadMenu();
 			Spells = new []{this.Q,	this.ExtendedQ, this.W,	this.E,	this.R};
 			DamageValues = new Damage(Spells);
 			this.Drawing = new Drawing(Spells);
