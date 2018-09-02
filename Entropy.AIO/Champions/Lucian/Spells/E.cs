@@ -25,7 +25,8 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 		protected override void SubscribeToEvents()
 		{
 			Tick.OnTick += this.OnTick;
-			//Orbwalker.OnPostAttack += OnPostAttack;
+			Orbwalker.OnPostAttack += this.OnPostAttack;
+			Gapcloser.OnNewGapcloser += this.OnNewGapcloser;
 		}
 
 		public override void OnTick(EntropyEventArgs args)
@@ -47,20 +48,10 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 
 		public override void OnPostAttack(OnPostAttackEventArgs args)
 		{
-			if (LocalPlayer.Instance.IsDead)
-			{
-				return;
-			}
-
-			if (!this.Spell.Ready)
-			{
-				return;
-			}
-
 			var target = args.Target;
 			switch (target.Type.TypeID)
 			{
-				// Combo E
+				// Weaving E
 				case GameObjectTypeID.AIHeroClient:
 					if (!CanCastE(target))
 					{
@@ -101,6 +92,67 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 				case GameObjectTypeID.AITurretClient:
 				case GameObjectTypeID.BarracksDampener:
 					this.StructureClear();
+					break;
+			}
+		}
+
+		public override void OnNewGapcloser(Gapcloser.GapcloserArgs args)
+		{
+			if (LocalPlayer.Instance.IsDead || !this.Spell.Ready)
+			{
+				return;
+			}
+
+			var antiGapcloserMenu = BaseMenu.Root["antiGapcloser"];
+			if (!antiGapcloserMenu["enabled"].Enabled)
+			{
+				return;
+			}
+
+			var sender = args.Sender;
+			if (sender == null || !sender.IsEnemy() || !sender.IsMelee)
+			{
+				return;
+			}
+
+			var spellOption = antiGapcloserMenu[$"{sender.CharName.ToLower()}.{args.SpellName.ToLower()}"];
+			if (spellOption == null || !spellOption.Enabled)
+			{
+				return;
+			}
+
+			this.AntiGapcloserE(args);
+		}
+
+		private void AntiGapcloserE(Gapcloser.GapcloserArgs args)
+		{
+			switch (args.Type)
+			{
+				case SpellType.Targeted:
+					if (args.Sender.IsMelee &&
+					    args.Target.IsMe())
+					{
+						var targetPos = LocalPlayer.Instance.Position.Extend(args.StartPosition, -this.Spell.Range);
+						if (targetPos.IsUnderEnemyTurret())
+						{
+							targetPos = Hud.CursorPositionUnclipped;
+						}
+
+						this.Spell.Cast(targetPos);
+					}
+
+					break;
+				case SpellType.Dash:
+					var targetPos2 = LocalPlayer.Instance.Position.Extend(args.EndPosition, -this.Spell.Range);
+					if (targetPos2.IsUnderEnemyTurret())
+					{
+						targetPos2 = Hud.CursorPositionUnclipped;
+					}
+
+					if (args.EndPosition.DistanceToPlayer() <= LocalPlayer.Instance.GetAutoAttackRange())
+					{
+						this.Spell.Cast(targetPos2);
+					}
 					break;
 			}
 		}

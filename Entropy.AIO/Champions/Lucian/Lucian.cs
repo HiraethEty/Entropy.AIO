@@ -1,7 +1,8 @@
-﻿namespace Entropy.AIO.Champions.Lucian
+﻿using Entropy.AIO.Champions.Lucian.Misc;
+
+namespace Entropy.AIO.Champions.Lucian
 {
 	using Drawings;
-	using Misc;
 	using SDK.Orbwalking;
 	using SDK.Orbwalking.EventArgs;
 	using Spells;
@@ -29,31 +30,25 @@
 			this.R = new R();
 		}
 
-		public override void OnTick(EntropyEventArgs args)
-		{
-			if (LocalPlayer.Instance.IsDead || Orbwalker.IsWindingUp)
-			{
-				return;
-			}
-
-			if (Definitions.IsCulling())
-			{
-				return;
-			}
-		}
-
 		public override void OnPostAttack(OnPostAttackEventArgs args)
 		{
+			if (LocalPlayer.Instance.IsDead)
+			{
+				return;
+			}
+
 			if (this.E.Spell.Ready)
 			{
 				this.E.OnPostAttack(args);
 				return;
 			}
+
 			if (this.Q.Spell.Ready)
 			{
 				this.Q.OnPostAttack(args);
 				return;
 			}
+
 			if (this.W.Spell.Ready)
 			{
 				this.W.OnPostAttack(args);

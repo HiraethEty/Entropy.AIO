@@ -20,6 +20,7 @@ namespace Entropy.AIO.General
 		protected abstract void SubscribeToEvents();
 
 		public virtual void OnTick(EntropyEventArgs args) { }
+		public virtual void OnWndProc(GameWndProcEventArgs args) { }
 		public virtual void OnCustomTick(EntropyEventArgs args) { }
 		public virtual void OnRender(EntropyEventArgs args) { }
 		public virtual void OnEndScene(EntropyEventArgs args) { }

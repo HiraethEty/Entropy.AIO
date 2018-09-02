@@ -4,7 +4,7 @@
 	using SDK.Extensions.Objects;
 	using SDK.Geometry;
 
-	class Definitions
+	internal class Definitions
 	{
 
 		/// <summary>

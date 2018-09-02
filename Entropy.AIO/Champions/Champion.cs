@@ -25,7 +25,6 @@ namespace Entropy.AIO.Champions
 		internal static Spell[] Spells { get; set; }
 		internal static BaseDamage DamageValues { get; set; }
 
-		public virtual void OnTick(EntropyEventArgs args) { }
 		public virtual void OnPostAttack(OnPostAttackEventArgs args) { }
 	}
 }
