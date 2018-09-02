@@ -7,6 +7,7 @@
 	using SDK.Extensions.Objects;
 	using SDK.Orbwalking;
 	using SDK.Orbwalking.EventArgs;
+	using SDK.Spells;
 	using SDK.UI;
 	using SDK.UI.Components;
 
@@ -144,6 +145,12 @@
 
 		protected override void LoadSpells()
 		{
+			Q = new Spell(SpellSlot.Q, 500);
+			W = new Spell(SpellSlot.W, 900);
+			E = new Spell(SpellSlot.E, 425);
+			R = new Spell(SpellSlot.R, 1200);
+
+			// Finish me with correct Skillshot Values
 		}
 
 		public override void OnTick(EntropyEventArgs args)
