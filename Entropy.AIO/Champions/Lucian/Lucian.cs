@@ -1,10 +1,6 @@
 ﻿namespace Entropy.AIO.Champions.Lucian
 {
-	using System.Linq;
 	using Drawings;
-	using General;
-	using SDK.Caching;
-	using SDK.Damage;
 	using SDK.Enumerations;
 	using SDK.Events;
 	using SDK.Extensions.Geometry;

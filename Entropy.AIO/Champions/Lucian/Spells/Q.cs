@@ -24,7 +24,7 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 		public override void OnCustomTick(EntropyEventArgs args)
 		{
 			if (!this.Spell.Ready ||
-			    !BaseMenu.Root["killsteal"]["normalQ"].Enabled)
+			    !BaseMenu.Root["killSteal"]["normalQ"].Enabled)
 			{
 				return;
 			}
