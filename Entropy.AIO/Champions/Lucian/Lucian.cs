@@ -1,6 +1,7 @@
 ﻿namespace Entropy.AIO.Champions.Lucian
 {
 	using System.Linq;
+	using Drawings;
 	using General;
 	using SDK.Caching;
 	using SDK.Damage;
@@ -25,6 +26,7 @@
 		{
 			Spells = new []{this.Q,	this.ExtendedQ, this.W,	this.E,	this.R};
 			DamageValues = new Damage(Spells);
+			this.Drawing = new Drawing(Spells);
 		}
 
 		/// <summary>
@@ -177,8 +179,6 @@
 				}
 			}
 		}
-
-		public override void OnRender(EntropyEventArgs args) { }
 
 		public override void OnPostAttack(OnPostAttackEventArgs args)
 		{

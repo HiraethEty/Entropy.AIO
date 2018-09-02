@@ -3,6 +3,7 @@
 namespace Entropy.AIO.Champions
 {
 	using General;
+	using Lucian.Drawings;
 	using SDK.Events;
 	using SDK.Orbwalking.EventArgs;
 	using SDK.Spells;
@@ -15,7 +16,7 @@ namespace Entropy.AIO.Champions
 		internal Spell R { get; set; }
 		internal static Spell[] Spells { get; set; }
 		internal static BaseDamage DamageValues { get; set; }
-		
+		internal Drawing Drawing { get; set; }
 
 		protected Champion()
 		{
@@ -26,8 +27,6 @@ namespace Entropy.AIO.Champions
 
 		public virtual void OnTick(EntropyEventArgs args) { }
 		public virtual void OnCustomTick(EntropyEventArgs args) { }
-		public virtual void OnRender(EntropyEventArgs args) { }
-		public virtual void OnEndScene(EntropyEventArgs args) { }
 		public virtual void OnPreAttack(OnPreAttackEventArgs args) { }
 		public virtual void OnPostAttack(OnPostAttackEventArgs args) { }
 		public virtual void OnProcessSpellCast(AIBaseClientCastEventArgs args) { }
