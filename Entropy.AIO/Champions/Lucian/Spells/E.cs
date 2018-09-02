@@ -30,6 +30,11 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 
 		public override void OnTick(EntropyEventArgs args)
 		{
+			if (LocalPlayer.Instance.IsDead || Orbwalker.IsWindingUp)
+			{
+				return;
+			}
+
 			if (!this.Spell.Ready ||
 			    !BaseMenu.Root["combo"]["eengage"].Enabled)
 			{
@@ -42,6 +47,11 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 
 		public override void OnPostAttack(OnPostAttackEventArgs args)
 		{
+			if (LocalPlayer.Instance.IsDead)
+			{
+				return;
+			}
+
 			if (!this.Spell.Ready)
 			{
 				return;

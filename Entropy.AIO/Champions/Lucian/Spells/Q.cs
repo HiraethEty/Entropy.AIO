@@ -2,6 +2,7 @@
 using Entropy.SDK.Caching;
 using Entropy.SDK.Damage;
 using Entropy.SDK.Extensions.Objects;
+using Entropy.SDK.Orbwalking;
 
 namespace Entropy.AIO.Champions.Lucian.Spells
 {
@@ -23,6 +24,11 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 
 		public override void OnCustomTick(EntropyEventArgs args)
 		{
+			if (LocalPlayer.Instance.IsDead || Orbwalker.IsWindingUp)
+			{
+				return;
+			}
+
 			if (!this.Spell.Ready ||
 			    !BaseMenu.Root["killSteal"]["normalQ"].Enabled)
 			{

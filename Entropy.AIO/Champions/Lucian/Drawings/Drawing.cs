@@ -4,9 +4,9 @@
 	using General;
 	using SDK.Spells;
 
-	class Drawing
+	internal class Drawing
 	{
-		private Spell[] Spells { get; set; }
+		private Spell[] Spells { get; }
 		public Drawing(Spell[] spells)
 		{
 			this.Spells = spells;
@@ -22,12 +22,8 @@
 
 			foreach (var spell in this.Spells)
 			{
-				if (!BaseMenu.Root["drawing"][$"{spell.Slot.ToString().ToLower()}"].Enabled)
-				{
-					continue;
-				}
-
-				if (!spell.Ready)
+				if (!spell.Ready ||
+				    !BaseMenu.Root["drawing"][$"{spell.Slot.ToString().ToLower()}"].Enabled)
 				{
 					continue;
 				}
