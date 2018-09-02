@@ -33,28 +33,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Entropy">
-      <HintPath>..\..\..\..\Documents\Entropy-Dev\Entropy.SDK\Build\Release\Entropy.dll</HintPath>
+      <HintPath>D:\Entropy\System\Entropy.dll</HintPath>
     </Reference>
     <Reference Include="Entropy.Sandbox">
-      <HintPath>..\..\..\..\Documents\Entropy-Dev\Entropy.SDK\Build\Release\Entropy.Sandbox.dll</HintPath>
+      <HintPath>D:\Entropy\System\Entropy.Sandbox.dll</HintPath>
     </Reference>
     <Reference Include="Entropy.SDK">
-      <HintPath>..\..\..\..\Documents\Entropy-Dev\Entropy.SDK\Build\Release\Entropy.SDK.dll</HintPath>
+      <HintPath>D:\Entropy\System\Entropy.SDK.dll</HintPath>
     </Reference>
     <Reference Include="Entropy.ToolKit">
-      <HintPath>..\..\..\..\Documents\Entropy-Dev\Entropy.SDK\Build\Release\Entropy.ToolKit.dll</HintPath>
+      <HintPath>D:\Entropy\System\Entropy.ToolKit.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>..\..\..\..\Documents\Entropy-Dev\Entropy.SDK\Build\Release\SharpDX.dll</HintPath>
+      <HintPath>D:\Entropy\System\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
-      <HintPath>..\..\..\..\Documents\Entropy-Dev\Entropy.SDK\Build\Release\SharpDX.Direct3D9.dll</HintPath>
+      <HintPath>D:\Entropy\System\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Mathematics">
-      <HintPath>..\..\..\..\Documents\Entropy-Dev\Entropy.SDK\Build\Release\SharpDX.Mathematics.dll</HintPath>
+      <HintPath>D:\Entropy\System\SharpDX.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.XInput">
-      <HintPath>..\..\..\..\Documents\Entropy-Dev\Entropy.SDK\Build\Release\SharpDX.XInput.dll</HintPath>
+      <HintPath>D:\Entropy\System\SharpDX.XInput.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -73,6 +73,7 @@
     <Compile Include="General\ChampionLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\Temp\AntiGapcloser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -80,7 +81,6 @@
   <ItemGroup>
     <Folder Include="Enumerations\" />
     <Folder Include="Managers\" />
-    <Folder Include="Utility\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

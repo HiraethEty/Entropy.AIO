@@ -1,4 +1,6 @@
-﻿namespace Entropy.AIO.General
+﻿using Entropy.ToolKit.Enumerations;
+
+namespace Entropy.AIO.General
 {
 	using System;
 	using System.Reflection;
@@ -10,23 +12,25 @@
 		{
 			try
 			{
-				var path = "Champions." + LocalPlayer.Instance.CharName;
+				var path = "Entropy.AIO.Champions." + LocalPlayer.Instance.CharName;
 				var type = Type.GetType(path, true);
 
 				Activator.CreateInstance(type);
+				Logging.Log($"Entropy.AIO: {LocalPlayer.Instance.CharName} Loaded successfully.");
 			}
 			catch (Exception e)
 			{
 				switch (e)
 				{
 					case TargetInvocationException _:
-						Logging.Log($"Entropy.AIO - Error occurred while trying to load {LocalPlayer.Instance.CharName}.");
-						e.ToolKitLog();
+						Logging.Log($"Entropy.AIO: Error occurred while trying to load {LocalPlayer.Instance.CharName}.", LogLevels.error);
 						break;
 					case TypeLoadException _:
-						BaseMenu.Root.DisplayName = $"{LocalPlayer.Instance.CharName} - Unsupported";
+						Logging.Log($"Entropy.AIO: {LocalPlayer.Instance.CharName} is not supported.", LogLevels.warning);
 						break;
 				}
+
+				e.ToolKitLog();
 			}
 		}
 	}
