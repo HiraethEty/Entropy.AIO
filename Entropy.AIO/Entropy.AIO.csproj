@@ -42,8 +42,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Documents\Entropy-Dev\Entropy.SDK\Build\Release\Entropy.SDK.dll</HintPath>
     </Reference>
-    <Reference Include="Entropy.ToolKit">
-      <HintPath>D:\Entropy\System\Entropy.ToolKit.dll</HintPath>
+    <Reference Include="Entropy.ToolKit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=167639b368a1a0ae, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Documents\Entropy-Dev\Entropy.SDK\Build\Release\Entropy.ToolKit.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
       <HintPath>D:\Entropy\System\SharpDX.dll</HintPath>
@@ -70,6 +71,8 @@
     <Compile Include="Bootstrap.cs" />
     <Compile Include="Champions\Champion.cs" />
     <Compile Include="Champions\Lucian\Lucian.cs" />
+    <Compile Include="Champions\Lucian\LucianDamage.cs" />
+    <Compile Include="General\BaseDamage.cs" />
     <Compile Include="General\BaseLogic.cs" />
     <Compile Include="General\BaseMenu.cs" />
     <Compile Include="General\ChampionLoader.cs" />
