@@ -48,7 +48,7 @@
 
 			if (LocalPlayer.Instance.IsMelee)
 			{
-				var hydraMenu = new Menu("hydramenu", "Hydras Menu")
+				var hydraMenu = new Menu("hydra", "Hydras Menu")
 				{
 					new MenuSeperator("hydrasep", "Use Hydras in:"),
 					new MenuBool("combo", "Combo"),
@@ -58,7 +58,7 @@
 					new MenuBool("manual", "While playing manually")
 				};
 
-				Root.Add(hydraMenu);
+				Root["general"].As<Menu>().Add(hydraMenu);
 			}
 
 			foreach (var spellSlot in Utilities.SpellSlots)

@@ -1,4 +1,11 @@
-﻿namespace Entropy.AIO.Utility
+﻿using Entropy.SDK.Caching;
+using Entropy.SDK.Events;
+using Entropy.SDK.Extensions;
+using Entropy.SDK.Extensions.Geometry;
+using Entropy.SDK.Orbwalking;
+using SharpDX;
+
+namespace Entropy.AIO.Utility
 {
 	using System;
 	using System.Collections.Generic;
@@ -44,9 +51,217 @@
 			ItemID.TearoftheGoddessQuickCharge
 		};
 
+		/// <summary>
+		///     Gets the Hydras.
+		/// </summary>
+		public static readonly ItemID[] Hydras =
+		{
+			ItemID.TitanicHydra,
+			ItemID.RavenousHydra,
+			ItemID.Tiamat
+		};
+
 		#endregion
 
 		#region Public Methods and Operators
+
+		/// <summary>
+		///     Returns if a Vector2 position is On Screen.
+		/// </summary>
+		/// <param name="position">The position.</param>
+		public static bool OnScreen(this Vector2 position)
+		{
+			return !position.IsZero;
+		}
+
+		/// <summary>
+		///     Returns if the name is an auto attack
+		/// </summary>
+		/// <param name="name">Name of spell</param>
+		/// <returns>The <see cref="bool" /></returns>
+		public static bool IsAutoAttack(string name)
+		{
+			name = name.ToLower();
+			return name.Contains("attack") && !Orbwalker.NoAttacks.Contains(name) ||
+				   Orbwalker.SpecialAttacks.Contains(name);
+		}
+
+		/// <returns>
+		///     true if an unit has a Sheen-Like buff; otherwise, false.
+		/// </returns>
+		public static bool HasSheenLikeBuff(this AIHeroClient unit)
+		{
+			var sheenLikeBuffNames = new[]{"sheen", "LichBane", "dianaarcready", "ItemFrozenFist", "sonapassiveattack"};
+			return sheenLikeBuffNames.Any(b => LocalPlayer.Instance.HasBuff(b));
+		}
+
+		/// <summary>
+		///     Gets a value indicating whether a determined hero has a stackable item.
+		/// </summary>
+		public static bool HasTearLikeItem(this AIHeroClient unit)
+		{
+			return TearLikeItems.Any(p => LocalPlayer.Instance.HasItem(p));
+		}
+
+		/// <summary>
+		///     Gets a value indicating whether a determined hero has a stackable item.
+		/// </summary>
+		public static bool IsTearLikeItemReady(this AIHeroClient unit)
+		{
+			if (!LocalPlayer.Instance.HasTearLikeItem())
+			{
+				return false;
+			}
+
+			var slot = LocalPlayer.Instance.InventorySlots.FirstOrDefault(s => TearLikeItems.Contains((ItemID)s.ItemID));
+			if (slot != null)
+			{
+				var spellSlot = slot.Slot;
+				if (spellSlot != SpellSlot.Unknown &&
+					!LocalPlayer.Instance.Spellbook.GetSpellState(spellSlot).HasFlag(SpellState.Cooldown))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		///     Returns true if there is a Wall between X pos and Y pos.
+		/// </summary>
+		public static bool AnyWallInBetween(Vector3 startPos, Vector3 endPos)
+		{
+			for (var i = 0; i < startPos.Distance(endPos); i += 5)
+			{
+				var point = NavGrid.WorldToCell(startPos.Extend(endPos, i));
+				if (point.IsWall() || point.IsBuilding())
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		///     Returns true if a the player is being grabbed by an enemy unit.
+		/// </summary>
+		public static bool IsBeingGrabbed(this AIHeroClient hero)
+		{
+			var grabsBuffs = new[] { "ThreshQ", "rocketgrab2" };
+			return hero.GetActiveBuffs().Any(b => grabsBuffs.Contains(b.Name));
+		}
+
+		/// <summary>
+		///     Returns true if a the player is being grabbed by an enemy unit.
+		/// </summary>
+		public static bool HasImmobileBuff(this AIHeroClient hero)
+		{
+			// Objects: Guardian Angel..
+			var immobileObjectLinked =
+				ObjectCache.AllGameObjects.FirstOrDefault(t => t.IsValid && t.Name == "LifeAura.troy");
+			if (immobileObjectLinked != null &&
+				ObjectCache.AllHeroes.MinBy(t => t.Distance(immobileObjectLinked)) == hero)
+			{
+				return true;
+			}
+
+			// Minions: Zac Passive
+			if (hero.CharName == "Zac" &&
+				ObjectCache.AllMinions.Any(m =>
+					m.Team == hero.Team && m.CharName == "ZacRebirthBloblet" && m.Distance(hero) < 500))
+			{
+				return true;
+			}
+
+			// Buffs: Zilean's Chronoshift, Zhonyas, Stopwatch, Anivia Egg,
+			var immobileBuffs = new[] { "chronorevive", "zhonyasringshield", "rebirth" };
+			if (hero.GetActiveBuffs().Any(b => immobileBuffs.Contains(b.Name)))
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		///     Returns true if a determined buff is a Hard CC Buff.
+		/// </summary>
+		// ReSharper disable once InconsistentNaming
+		public static bool IsHardCC(this BuffInstance buff)
+		{
+			// ReSharper disable once InconsistentNaming
+			var hardCCList = new List<BuffType>
+			{
+				BuffType.Stun,
+				BuffType.Fear,
+				BuffType.Flee,
+				BuffType.Snare,
+				BuffType.Taunt,
+				BuffType.Charm,
+				BuffType.Knockup,
+				BuffType.Suppression
+			};
+
+			return hardCCList.Contains(buff.Type);
+		}
+
+		/// <summary>
+		///     Gets a value indicating whether a determined champion can move or not.
+		/// </summary>
+		/// <param name="unit">The hero.</param>
+		/// <param name="minTime">The minimum time remaining for the CC to trigger this function.</param>
+		public static bool IsImmobile(this AIBaseClient unit, double minTime)
+		{
+			var hero = unit as AIHeroClient;
+			if (hero != null &&
+				hero.HasImmobileBuff())
+			{
+				return true;
+			}
+
+			if (unit.IsDead ||
+				unit.IsDashing() ||
+				unit.HasBuffOfType(BuffType.Knockback))
+			{
+				return false;
+			}
+
+			return unit.GetActiveBuffs().Any(b =>
+				b.IsHardCC() &&
+				b.GetRemainingBuffTime() >= minTime);
+		}
+
+		/// <returns>
+		///     true if the sender is a hero, a turret or an important jungle monster; otherwise, false.
+		/// </returns>
+		public static bool ShouldShieldAgainstSender(AIBaseClient sender)
+		{
+			return
+				ObjectCache.EnemyHeroes.Contains(sender) ||
+				ObjectCache.EnemyTurrets.Contains(sender) ||
+				ObjectCache.LargeJungleMinions.Concat(ObjectCache.LegendaryJungleMinions).Contains(sender);
+		}
+
+		/// <summary>
+		///     Returns whether the hero is in fountain range.
+		/// </summary>
+		/// <param name="hero">The Hero</param>
+		/// <returns>Is Hero in fountain range</returns>
+		public static bool InFountain(this AIHeroClient hero)
+		{
+			var heroTeam = hero.Team == GameObjectTeam.Order ? "Order" : "Chaos";
+			var fountainTurret =
+				ObjectCache.AllGameObjects.FirstOrDefault(o =>
+					o.IsValid && o.Name == "Turret_" + heroTeam + "TurretShrine");
+			if (fountainTurret == null)
+			{
+				return false;
+			}
+
+			return hero.Distance(fountainTurret) < 1300f;
+		}
 
 		/// <summary>
 		///     The PreserveMana Dictionary.
@@ -60,788 +275,14 @@
 			new Dictionary<string, Dictionary<SpellSlot, int[]>>
 			{
 				{
-					"Ahri", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								65, 70, 75, 80, 85
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								50, 50, 50, 50, 50
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								85, 85, 85, 85, 85
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Akali", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								60, 60, 60, 60, 60
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								60, 55, 50, 45, 40
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								60, 55, 50, 45, 40
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								0, 0, 0
-							}
-						}
-					}
-				},
-				{
-					"Anivia", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								80, 90, 100, 110, 120
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								70, 70, 70, 70, 70
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								50, 60, 70, 80, 90
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								75, 75, 75
-							}
-						}
-					}
-				},
-				{
-					"Ashe", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								50, 50, 50, 50, 50
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								50, 50, 50, 50, 50
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								0, 0, 0, 0, 0
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Caitlyn", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								50, 60, 70, 80, 90
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								20, 20, 20, 20, 20
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								75, 75, 75, 75, 75
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Corki", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								60, 70, 80, 90, 100
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								100, 100, 100, 100, 100
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								50, 50, 50, 50, 50
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								20, 20, 20
-							}
-						}
-					}
-				},
-				{
-					"Darius", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								30, 35, 40, 45, 50
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								30, 30, 30, 30, 30
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								45, 45, 45, 45, 45
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 0
-							}
-						}
-					}
-				},
-				{
-					"Evelynn", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								40, 45, 50, 55, 60
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								60, 70, 80, 90, 100
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								40, 45, 50, 55, 60
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Ezreal", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								28, 31, 34, 37, 40
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								50, 60, 70, 80, 90
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								90, 90, 90, 90, 90
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Jhin", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								40, 45, 50, 55, 60
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								50, 60, 70, 80, 90
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								30, 35, 40, 45, 50
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Jinx", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								20, 20, 20, 20, 20
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								50, 60, 70, 80, 90
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								70, 70, 70, 70, 70
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Kaisa", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								55, 55, 55, 55, 55
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								55, 60, 65, 70, 75
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								30, 30, 30, 30, 30
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Kalista", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								50, 55, 60, 65, 70
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								20, 20, 20, 20, 20
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								30, 30, 30, 30, 30
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"KogMaw", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								40, 40, 40, 40, 40
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								40, 40, 40, 40, 40
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								80, 90, 100, 110, 120
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								40, 40, 40
-							}
-						}
-					}
-				},
-				{
 					"Lucian", new Dictionary<SpellSlot, int[]>
 					{
-						{
-							SpellSlot.Q, new[]
-							{
-								50, 60, 70, 80, 90
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								50, 50, 50, 50, 50
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								40, 20, 30, 10, 0
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
+						{SpellSlot.Q, new[] {50, 60, 70, 80, 90}},
+						{SpellSlot.W, new[] {50, 50, 50, 50, 50}},
+						{SpellSlot.E, new[] {40, 20, 30, 10, 0}},
+						{SpellSlot.R, new[] {100, 100, 100}}
 					}
 				},
-				{
-					"MissFortune", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								43, 46, 49, 52, 55
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								30, 30, 30, 30, 30
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								80, 80, 80, 80, 80
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Olaf", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								60, 60, 60, 60, 60
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								30, 30, 30, 30, 30
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								0, 0, 0, 0, 0
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 90, 80
-							}
-						}
-					}
-				},
-				{
-					"Orianna", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								30, 35, 40, 45, 50
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								70, 80, 90, 100, 110
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								60, 60, 60, 60, 60
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Quinn", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								50, 55, 60, 65, 70
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								0, 0, 0, 0, 0
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								50, 50, 50, 50, 50
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 50, 0
-							}
-						}
-					}
-				},
-				{
-					"Sivir", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								70, 80, 90, 100, 110
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								60, 60, 60, 60, 60
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								0, 0, 0, 0, 0
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Syndra", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								40, 50, 60, 70, 80
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								60, 70, 80, 90, 100
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								50, 50, 50, 50, 50
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Taliyah", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								60, 70, 80, 90, 100
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								70, 80, 90, 100, 110
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								90, 95, 100, 105, 110
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Tristana", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								0, 0, 0, 0, 0
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								60, 60, 60, 60, 60
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								70, 75, 80, 85, 90
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Twitch", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								40, 40, 40, 40, 40
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								70, 70, 70, 70, 70
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								50, 60, 70, 80, 90
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Varus", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								70, 75, 80, 85, 90
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								0, 0, 0, 0, 0
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								80, 80, 80, 80, 80
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								100, 100, 100
-							}
-						}
-					}
-				},
-				{
-					"Vayne", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								30, 30, 30, 30, 30
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								0, 0, 0, 0, 0
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								90, 90, 90, 90, 90
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								80, 80, 80
-							}
-						}
-					}
-				},
-				{
-					"Xayah", new Dictionary<SpellSlot, int[]>
-					{
-						{
-							SpellSlot.Q, new[]
-							{
-								50, 50, 50, 50, 50
-							}
-						},
-						{
-							SpellSlot.W, new[]
-							{
-								60, 55, 50, 45, 40
-							}
-						},
-						{
-							SpellSlot.E, new[]
-							{
-								40, 40, 40, 40, 40
-							}
-						},
-						{
-							SpellSlot.R, new[]
-							{
-								80, 90, 100
-							}
-						}
-					}
-				}
 			};
 
 		/// <summary>
