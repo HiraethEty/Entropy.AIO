@@ -14,7 +14,7 @@
 				var path = $"Entropy.AIO.Champions.{LocalPlayer.Instance.CharName}.{LocalPlayer.Instance.CharName}";
 				var type = Type.GetType(path, true);
 
-				Activator.CreateInstance(type);		
+				Activator.CreateInstance(type);
 				Logging.Log($"Entropy.AIO: {LocalPlayer.Instance.CharName} Loaded successfully.");
 			}
 			catch (Exception e)

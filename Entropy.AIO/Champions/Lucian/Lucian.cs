@@ -24,19 +24,18 @@
 		{
 			var combo = new Menu("combo", "Combo")
 			{
-				new MenuBool("normalQ", "Use normal Q"),
-				new MenuBool("extendedQ", "Use extended Q"),
+				new MenuBool("q", "Use Q"),
 				new MenuBool("w", "Use W"),
 				new MenuList("e", "Use E", new []{"Dynamic Range", "Always Short", "Always Long", "Don't use E"}).SetToolTip("Always directed to Cursor"),
-				new MenuBool("normalR", "Use R if all spells on CD", false),
+				new MenuBool("normalR", "Use R if all spells on CD", false).SetToolTip("It will stop as soon as one spell returns ready to use, if the enemy is in its range."),
 				new MenuBool("essenceR", "Use R to proc Essence Reaver").SetToolTip("If you have Essence Reaver, uses R and immediately stops it to make full use of its passive.")
 			};
 
 			var harass = new Menu("harass", "Harass")
 			{
-				new MenuBool("normalQ", "Use normal Q"),
-				new MenuBool("extendedQ", "Use extended Q"),
-				new MenuBool("w", "Use W", false),
+				new MenuSliderBool("normalQ", "Use normal Q / If Mana >= x%", true, 50),
+				new MenuSliderBool("extendedQ", "Use extended Q / If Mana >= x%", true, 50),
+				new MenuSliderBool("w", "Use W / If Mana >= x%", false, 50),
 
 				new Menu("whitelists", "Whitelists")
 				{
