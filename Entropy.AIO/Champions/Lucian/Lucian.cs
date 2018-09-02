@@ -1,6 +1,4 @@
-﻿using Entropy.AIO.Utility;
-
-namespace Entropy.AIO.Champions.Lucian
+﻿namespace Entropy.AIO.Champions.Lucian
 {
 	using System.Linq;
 	using General;
@@ -18,7 +16,7 @@ namespace Entropy.AIO.Champions.Lucian
 	using SDK.UI;
 	using SDK.UI.Components;
 	using SDK.Utils;
-	using Champion = Champions.Champion;
+	using Champion = Champion;
 
 	internal sealed class Lucian : Champion
 	{
@@ -32,6 +30,7 @@ namespace Entropy.AIO.Champions.Lucian
 			Gapcloser.OnNewGapcloser += this.OnNewGapcloser;
 			Orbwalker.OnPostAttack += this.OnPostAttack;
 			Renderer.OnRender += this.OnRender;
+
 			this.DamageValues = new LucianDamage(new[] {this.Q, this.W, this.E, this.R});
 		}
 
@@ -52,12 +51,7 @@ namespace Entropy.AIO.Champions.Lucian
 			{
 				new MenuBool("q", "Use Q"),
 				new MenuBool("w", "Use W"),
-				new MenuList("e",
-				             "Use E",
-				             new[]
-				             {
-					             "Dynamic Range", "Always Short", "Always Long", "Don't use E"
-				             }).SetToolTip("Always directed to Cursor"),
+				new MenuList("e", "Use E", new[] {"Dynamic Range", "Always Short", "Always Long", "Don't use E" }).SetToolTip("Always directed to Cursor"),
 				new MenuBool("normalR", "Use R if all spells on CD", false).SetToolTip("It will stop as soon as one spell returns ready to use, if the enemy is in its range."),
 				new MenuBool("essenceR", "Use R to proc Essence Reaver").SetToolTip("If you have Essence Reaver, uses R and immediately stops it to make full use of its passive."),
 				new MenuBool("bool", "Use Semi-Automatic R"),
@@ -200,7 +194,12 @@ namespace Entropy.AIO.Champions.Lucian
 			this.E = new Spell(SpellSlot.E, LocalPlayer.Instance.GetAutoAttackRange() + 425f);
 			this.R = new Spell(SpellSlot.R, 1150f);
 
+			this.ExtendedQ.SetSkillshot(0.25f, 65f, float.MaxValue, collision: false);
+			this.W.SetSkillshot(0.25f, 80f, 1600f, collision: false);
+			this.R.SetSkillshot(0.25f, 110f, 2500f, collision: false);
+
 			this.Q.SetCustomDamageCalculateFunction(this.DamageValues.QDamage);
+			this.W.SetCustomDamageCalculateFunction(this.DamageValues.WDamage);
 		}
 
 		public override void OnTick(EntropyEventArgs args)
@@ -235,9 +234,12 @@ namespace Entropy.AIO.Champions.Lucian
 
 		public override void OnCustomTick(EntropyEventArgs args)
 		{
-			if (LocalPlayer.Instance.IsDead) { }
+			if (LocalPlayer.Instance.IsDead)
+			{
+				return;
+			}
 
-			//KillSteal();
+			this.Killsteal();
 		}
 
 		private void Automatic()
@@ -252,9 +254,11 @@ namespace Entropy.AIO.Champions.Lucian
 				                  100 + EnetClient.Ping);
 			}
 
-			if (this.R.Ready && BaseMenu.Root["combo"]["bool"].Enabled)
+			if (this.R.Ready &&
+			    BaseMenu.Root["combo"]["bool"].Enabled)
 			{
-				if (!IsCulling() && BaseMenu.Root["combo"]["key"].Enabled)
+				if (!IsCulling() &&
+				    BaseMenu.Root["combo"]["key"].Enabled)
 				{
 					var bestTarget = ObjectCache.EnemyHeroes
 					                            .Where(t =>
@@ -265,7 +269,8 @@ namespace Entropy.AIO.Champions.Lucian
 
 					if (bestTarget != null)
 					{
-						if (this.W.Ready && bestTarget.DistanceToPlayer() <= this.W.Range)
+						if (this.W.Ready &&
+						    bestTarget.DistanceToPlayer() <= this.W.Range)
 						{
 							this.W.Cast(bestTarget.Position);
 						}
@@ -273,16 +278,76 @@ namespace Entropy.AIO.Champions.Lucian
 						this.R.Cast(bestTarget.Position);
 					}
 				}
-				else if (IsCulling() && !BaseMenu.Root["combo"]["key"].Enabled)
+				else if (IsCulling() &&
+				         !BaseMenu.Root["combo"]["key"].Enabled)
 				{
 					this.R.Cast();
 				}
 			}
 		}
 
+		private void Killsteal()
+		{
+			if (Q.Ready &&
+			    (BaseMenu.Root["killsteal"]["normalQ"].Enabled || BaseMenu.Root["killsteal"]["extendedQ"].Enabled))
+			{
+				foreach (var target in ObjectCache.EnemyHeroes
+					.Where(t =>
+						t.IsValidTarget() &&
+						!Invulnerable.IsInvulnerable(t, DamageType.Physical, damage: Q.GetDamage(t)) &&
+						Q.GetDamage(t) >= t.GetRealHealth(DamageType.Physical)))
+				{
+					if (BaseMenu.Root["killsteal"]["normalQ"].Enabled &&
+						target.DistanceToPlayer() < Q.Range)
+					{
+						Q.CastOnUnit(target);
+						break;
+					}
+
+					if (BaseMenu.Root["killsteal"]["extendedQ"].Enabled)
+					{
+						foreach (var minion in ObjectCache.EnemyLaneMinions
+							.Where(m => m.IsValidTarget(Q.Range) && QRectangle(m).IsInsidePolygon(Q.GetPrediction(target).CastPosition)))
+						{
+							Q.CastOnUnit(minion);
+							break;
+						}
+					}
+				}
+			}
+
+			if (W.Ready &&
+			    BaseMenu.Root["killsteal"]["w"].Enabled)
+			{
+				foreach (var target in ObjectCache.EnemyHeroes
+					.Where(t =>
+						t.IsValidTarget() &&
+						!Invulnerable.IsInvulnerable(t, DamageType.Magical, damage: W.GetDamage(t)) &&
+						W.GetDamage(t) >= t.GetRealHealth(DamageType.Magical)))
+				{
+					W.Cast(target);
+					break;
+				}
+			}
+		}
+
 		public override void OnRender(EntropyEventArgs args) { }
 
-		public override void OnPostAttack(OnPostAttackEventArgs args) { }
+		public override void OnPostAttack(OnPostAttackEventArgs args)
+		{
+			switch (Orbwalker.Mode)
+			{
+				case OrbwalkingMode.Combo:
+					//Weaving(args);
+					break;
+
+				case OrbwalkingMode.LaneClear:
+					//Laneclear(args);
+					//Jungleclear(args);
+					//Buildingclear(args);
+					break;
+			}
+		}
 
 		public override void OnNewGapcloser(Gapcloser.GapcloserArgs args) { }
 	}

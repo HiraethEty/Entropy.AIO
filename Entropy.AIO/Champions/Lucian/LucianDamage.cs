@@ -5,7 +5,7 @@
 	using SDK.Extensions.Objects;
 	using SDK.Spells;
 
-	class LucianDamage : BaseDamage
+	internal class LucianDamage : BaseDamage
 	{
 		private readonly Spell[] Spells;
 		public LucianDamage(Spell[] spells)
@@ -22,6 +22,16 @@
 			                  * LocalPlayer.Instance.CharIntermediate.BonusPhysicalDamage();
 
 			return LocalPlayer.Instance.CalculateDamage(target, DamageType.Physical, qBaseDamage);
+		}
+
+		public override float WDamage(AIBaseClient target)
+		{
+			var wLevel = this.Spells[1].Level;
+
+			var wBaseDamage = new[] { 85f, 125f, 165f, 205f, 245f }[wLevel - 1]
+			                  + 0.9f * LocalPlayer.Instance.CharIntermediate.TotalAbilityDamage();
+
+			return LocalPlayer.Instance.CalculateDamage(target, DamageType.Magical, wBaseDamage);
 		}
 	}
 }
