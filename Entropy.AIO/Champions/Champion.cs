@@ -3,8 +3,15 @@ using Entropy.SDK.Orbwalking.EventArgs;
 
 namespace Entropy.AIO.Champions
 {
+	using SDK.Spells;
+
 	public abstract class Champion
 	{
+		internal Spell Q { get; set; }
+		internal Spell W { get; set; }
+		internal Spell E { get; set; }
+		internal Spell R { get; set; }
+
 		protected Champion()
 		{
 			LoadMenu();
