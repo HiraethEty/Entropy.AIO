@@ -44,8 +44,7 @@ namespace Entropy.AIO.Champions.Lucian
 		///     The Q Rectangle.
 		/// </summary>
 		/// <param name="unit">The unit.</param>
-		public Rectangle QRectangle(AIBaseClient unit)
-			=> new Rectangle(LocalPlayer.Instance.Position, LocalPlayer.Instance.Position.Extend(unit.Position, this.ExtendedQ.Range), this.ExtendedQ.Width);
+		public Rectangle QRectangle(AIBaseClient unit) => new Rectangle(LocalPlayer.Instance.Position, LocalPlayer.Instance.Position.Extend(unit.Position, this.ExtendedQ.Range), this.ExtendedQ.Width);
 
 		protected override void LoadMenu()
 		{

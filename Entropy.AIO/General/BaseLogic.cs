@@ -3,7 +3,6 @@
 	using System.Linq;
 	using SDK.Caching;
 	using SDK.Enumerations;
-	using SDK.Events;
 	using SDK.Extensions.Geometry;
 	using SDK.Extensions.Objects;
 	using SDK.Orbwalking;
@@ -16,15 +15,9 @@
 	{
 		public static void Initialize()
 		{
-			Tick.OnTick += OnTick;
 			Orbwalker.OnPreAttack += OnPreAttack;
 			Orbwalker.OnPostAttack += OnPostAttack;
 			Spellbook.OnLocalCastSpell += OnLocalCastSpell;
-		}
-
-		private static void OnTick(EntropyEventArgs args)
-		{
-
 		}
 
 		private static void OnPreAttack(OnPreAttackEventArgs args)
