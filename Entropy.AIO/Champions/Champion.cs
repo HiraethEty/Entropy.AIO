@@ -13,7 +13,7 @@ namespace Entropy.AIO.Champions
 		internal Spell W { get; set; }
 		internal Spell E { get; set; }
 		internal Spell R { get; set; }
-		internal Spell[] Spells { get; set; }
+		internal static Spell[] Spells { get; set; }
 		internal static BaseDamage DamageValues { get; set; }
 		
 

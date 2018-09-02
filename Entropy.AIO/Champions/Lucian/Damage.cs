@@ -11,6 +11,13 @@
 		public Damage(Spell[] spells)
 		{
 			this.Spells = spells;
+			SetDamageCalculations();
+		}
+
+		private void SetDamageCalculations()
+		{
+			Champion.Spells[0].SetCustomDamageCalculateFunction(this.Q);
+			Champion.Spells[1].SetCustomDamageCalculateFunction(this.W);
 		}
 
 		public override float Q(AIBaseClient target)

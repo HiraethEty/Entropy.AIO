@@ -10,7 +10,7 @@
 		{
 			this.Spell = new Spell(SpellSlot.W, 900f);
 			this.Spell.SetSkillshot(0.25f, 80f, 1600f, collision: false);
-			this.Spell.SetCustomDamageCalculateFunction(Champion.DamageValues.W);
+			//this.Spell.SetCustomDamageCalculateFunction(Champion.DamageValues.W);
 		}
 
 		protected override void SubscribeToEvents()
