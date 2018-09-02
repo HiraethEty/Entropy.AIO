@@ -16,8 +16,9 @@
 
 		private void SetDamageCalculations()
 		{
-			this.Spells[0].SetCustomDamageCalculateFunction(this.QDamage);
-			this.Spells[2].SetCustomDamageCalculateFunction(this.WDamage);
+			Champion.Spells[0].SetCustomDamageCalculateFunction(this.QDamage);
+			Champion.Spells[1].SetCustomDamageCalculateFunction(this.QDamage);
+			Champion.Spells[2].SetCustomDamageCalculateFunction(this.WDamage);
 		}
 
 		public override float QDamage(AIBaseClient target)

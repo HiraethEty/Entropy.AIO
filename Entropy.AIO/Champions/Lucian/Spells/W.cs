@@ -1,4 +1,9 @@
-﻿namespace Entropy.AIO.Champions.Lucian.Spells
+﻿using System.Linq;
+using Entropy.SDK.Caching;
+using Entropy.SDK.Damage;
+using Entropy.SDK.Extensions.Objects;
+
+namespace Entropy.AIO.Champions.Lucian.Spells
 {
 	using General;
 	using SDK.Events;
@@ -14,12 +19,27 @@
 
 		protected override void SubscribeToEvents()
 		{
-			Tick.OnTick += this.OnTick;
+			new CustomTick(2000).OnTick += this.OnCustomTick;
 		}
 
-		public override void OnTick(EntropyEventArgs args)
+		public override void OnCustomTick(EntropyEventArgs args)
 		{
-			this.Spell.Cast(/*target*/);
+			if (!this.Spell.Ready ||
+			    !BaseMenu.Root["killsteal"]["w"].Enabled)
+			{
+				return;
+			}
+
+			// Killsteal W
+			foreach (var target in ObjectCache.EnemyHeroes
+				.Where(t =>
+					t.IsValidTarget(this.Spell.Range) &&
+					!Invulnerable.IsInvulnerable(t, DamageType.Magical, damage: this.Spell.GetDamage(t)) &&
+					this.Spell.GetDamage(t) >= t.GetRealHealth(DamageType.Magical)))
+			{
+				this.Spell.Cast(target);
+				break;
+			}
 		}
 	}
 }

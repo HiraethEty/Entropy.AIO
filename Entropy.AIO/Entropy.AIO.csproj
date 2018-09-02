@@ -89,6 +89,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\Extensions.cs" />
+    <Compile Include="Utility\ManaManager.cs" />
     <Compile Include="Utility\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
