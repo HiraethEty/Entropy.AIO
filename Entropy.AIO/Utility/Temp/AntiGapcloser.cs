@@ -25,7 +25,6 @@ namespace Entropy.AIO.Utility
 		{
 			Spells = new List<SDK.Events.GapcloserSpellData>();
 			DetectedGapcloser = new Dictionary<uint, GapcloserArgs>();
-
 			GapcloserDatabase.Init(Spells);
 
 			if (!Spells.Any())

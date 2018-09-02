@@ -1,13 +1,12 @@
-﻿using System.Linq;
-using Entropy.SDK.Events;
-using Entropy.SDK.Extensions.Objects;
-using Entropy.SDK.Orbwalking.EventArgs;
-
-namespace Entropy.AIO.Champions.Lucian
+﻿namespace Entropy.AIO.Champions.Lucian
 {
+	using System.Linq;
 	using General;
 	using SDK.Caching;
+	using SDK.Events;
+	using SDK.Extensions.Objects;
 	using SDK.Orbwalking;
+	using SDK.Orbwalking.EventArgs;
 	using SDK.UI;
 	using SDK.UI.Components;
 

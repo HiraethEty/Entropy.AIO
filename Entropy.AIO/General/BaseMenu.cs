@@ -11,13 +11,6 @@
 		public static void Initialize()
 		{
 			Root = new Menu("root", LocalPlayer.Instance.CharName, true);
-			{
-				var menuItem = new Menu("menuItem", "Menu Item")
-				{
-					new MenuBool("test", "test")
-				};
-				Root.Add(menuItem);
-			}
 			Root.Attach();
 			Orbwalker.Attach(Root);
 		}

@@ -1,10 +1,9 @@
-﻿using Entropy.ToolKit.Enumerations;
-
-namespace Entropy.AIO.General
+﻿namespace Entropy.AIO.General
 {
 	using System;
 	using System.Reflection;
 	using ToolKit;
+	using ToolKit.Enumerations;
 
 	internal static class ChampionLoader
 	{
@@ -12,10 +11,10 @@ namespace Entropy.AIO.General
 		{
 			try
 			{
-				var path = "Entropy.AIO.Champions." + LocalPlayer.Instance.CharName;
+				var path = $"Entropy.AIO.Champions.{LocalPlayer.Instance.CharName}.{LocalPlayer.Instance.CharName}";
 				var type = Type.GetType(path, true);
 
-				Activator.CreateInstance(type);
+				Activator.CreateInstance(type);		
 				Logging.Log($"Entropy.AIO: {LocalPlayer.Instance.CharName} Loaded successfully.");
 			}
 			catch (Exception e)

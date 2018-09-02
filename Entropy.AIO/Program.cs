@@ -9,7 +9,7 @@
 		{
 			Loading.OnLoadingComplete += () =>
 				{
-					DelayAction.Queue(Bootstrap.Initialize, 100);
+					DelayAction.Queue(Bootstrap.Initialize, 1750);
 				};
 		}
 	}
