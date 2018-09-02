@@ -1,11 +1,4 @@
-﻿using Entropy.SDK.Caching;
-using Entropy.SDK.Events;
-using Entropy.SDK.Extensions;
-using Entropy.SDK.Extensions.Geometry;
-using Entropy.SDK.Orbwalking;
-using SharpDX;
-
-namespace Entropy.AIO.Utility
+﻿namespace Entropy.AIO.Utility
 {
 	using System;
 	using System.Collections.Generic;
@@ -13,56 +6,16 @@ namespace Entropy.AIO.Utility
 	using SDK.Enumerations;
 	using SDK.Extensions.Objects;
 	using SDK.Spells;
+	using SDK.Caching;
+	using SDK.Events;
+	using SDK.Extensions;
+	using SDK.Extensions.Geometry;
+	using SDK.Orbwalking;
+	using SharpDX;
+	using Enumerations;
 
 	internal static class Utilities
 	{
-		#region Static Fields
-
-		/// <summary>
-		///     Gets the spellslots.
-		/// </summary>
-		public static readonly SpellSlot[] SpellSlots =
-		{
-			SpellSlot.Q,
-			SpellSlot.W,
-			SpellSlot.E,
-			SpellSlot.R
-		};
-
-		/// <summary>
-		///     Gets the summoner spellslots.
-		/// </summary>
-		public static SpellSlot[] SummonerSpellSlots =
-		{
-			SpellSlot.Summoner1,
-			SpellSlot.Summoner2
-		};
-
-		/// <summary>
-		///     Gets the tear-like items.
-		/// </summary>
-		public static readonly ItemID[] TearLikeItems =
-		{
-			ItemID.Manamune,
-			ItemID.ArchangelsStaff,
-			ItemID.TearoftheGoddess,
-			ItemID.ManamuneQuickCharge,
-			ItemID.ArchangelsStaffQuickCharge,
-			ItemID.TearoftheGoddessQuickCharge
-		};
-
-		/// <summary>
-		///     Gets the Hydras.
-		/// </summary>
-		public static readonly ItemID[] Hydras =
-		{
-			ItemID.TitanicHydra,
-			ItemID.RavenousHydra,
-			ItemID.Tiamat
-		};
-
-		#endregion
-
 		#region Public Methods and Operators
 
 		/// <summary>
@@ -73,6 +26,14 @@ namespace Entropy.AIO.Utility
 		{
 			return !position.IsZero;
 		}
+
+		/// <summary>
+		///     List of the Pet names.
+		/// </summary>
+		public static readonly string[] PetList =
+		{
+			"Tibbers", "YorickBigGhoul"
+		};
 
 		/// <summary>
 		///     Returns if the name is an auto attack
@@ -100,7 +61,7 @@ namespace Entropy.AIO.Utility
 		/// </summary>
 		public static bool HasTearLikeItem(this AIHeroClient unit)
 		{
-			return TearLikeItems.Any(p => LocalPlayer.Instance.HasItem(p));
+			return Enumerations.TearLikeItems.Any(p => LocalPlayer.Instance.HasItem(p));
 		}
 
 		/// <summary>
@@ -113,7 +74,7 @@ namespace Entropy.AIO.Utility
 				return false;
 			}
 
-			var slot = LocalPlayer.Instance.InventorySlots.FirstOrDefault(s => TearLikeItems.Contains((ItemID)s.ItemID));
+			var slot = LocalPlayer.Instance.InventorySlots.FirstOrDefault(s => Enumerations.TearLikeItems.Contains((ItemID)s.ItemID));
 			if (slot != null)
 			{
 				var spellSlot = slot.Slot;

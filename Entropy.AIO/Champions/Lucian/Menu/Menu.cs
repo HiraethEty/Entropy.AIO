@@ -7,7 +7,7 @@
 	using SDK.Extensions.Objects;
 	using SDK.UI.Components;
 
-	class Menu
+	internal class Menu
 	{
 		public Menu()
 		{
@@ -21,6 +21,7 @@
 				new MenuBool("q", "Use Q"),
 				new MenuBool("w", "Use W"),
 				new MenuList("e", "Use E", new[] {"Dynamic Range", "Always Short", "Always Long", "Don't use E" }).SetToolTip("Always directed to Cursor"),
+				new MenuBool("eengage", "^ Also use e to Engage", false),
 				new MenuBool("normalR", "Use R if all spells on CD", false).SetToolTip("It will stop as soon as one spell returns ready to use, if the enemy is in its range."),
 				new MenuBool("essenceR", "Use R to proc Essence Reaver").SetToolTip("If you have Essence Reaver, uses R and immediately stops it to make full use of its passive."),
 				new MenuBool("bool", "Use Semi-Automatic R"),

@@ -4,7 +4,7 @@
 	using SDK.Events;
 	using SDK.Spells;
 
-	sealed class Q : BaseSpell
+	internal sealed class Q : BaseSpell
 	{
 		protected override void SetSpellData()
 		{

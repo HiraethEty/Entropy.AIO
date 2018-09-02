@@ -3,7 +3,7 @@
 	using SDK.Orbwalking;
 	using SDK.UI;
 	using SDK.UI.Components;
-	using Utility;
+	using Enumerations;
 
 	internal static class BaseMenu
 	{
@@ -61,7 +61,7 @@
 				Root["general"].As<Menu>().Add(hydraMenu);
 			}
 
-			foreach (var spellSlot in Utilities.SpellSlots)
+			foreach (var spellSlot in Enumerations.SpellSlots)
 			{
 				Root["general"]["preservemana"].As<Menu>().Add(new MenuBool(spellSlot.ToString().ToLower(), spellSlot.ToString(), false));
 				Root["general"]["preservespells"].As<Menu>().Add(new MenuSlider(spellSlot.ToString().ToLower(), $"Don't cast {spellSlot} if target killable in X AAs", 0, 0, 10));

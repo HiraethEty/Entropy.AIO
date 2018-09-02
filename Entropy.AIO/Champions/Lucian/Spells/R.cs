@@ -4,7 +4,7 @@
 	using SDK.Events;
 	using SDK.Spells;
 
-	sealed class R : BaseSpell
+	internal sealed class R : BaseSpell
 	{
 		protected override void SetSpellData()
 		{

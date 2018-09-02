@@ -78,6 +78,7 @@
     <Compile Include="Champions\Lucian\Spells\Q.cs" />
     <Compile Include="Champions\Lucian\Spells\R.cs" />
     <Compile Include="Champions\Lucian\Spells\W.cs" />
+    <Compile Include="Enumerations\Enumerations.cs" />
     <Compile Include="General\BaseDamage.cs" />
     <Compile Include="General\BaseLogic.cs" />
     <Compile Include="General\BaseMenu.cs" />
@@ -85,13 +86,13 @@
     <Compile Include="General\ChampionLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\Extensions.cs" />
     <Compile Include="Utility\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Enumerations\" />
     <Folder Include="Managers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

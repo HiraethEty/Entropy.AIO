@@ -10,6 +10,7 @@
 	using SDK.Damage;
 	using Utility;
 	using ToolKit;
+	using Enumerations;
 
 	internal static class BaseLogic
 	{
@@ -83,7 +84,7 @@
 			// Hydra casting
 			if (BaseMenu.Root["hydra"] != null)
 			{
-				var slot = LocalPlayer.Instance.InventorySlots.FirstOrDefault(i => Utilities.Hydras.Contains((ItemID)i.ItemID));
+				var slot = LocalPlayer.Instance.InventorySlots.FirstOrDefault(i => Enumerations.Hydras.Contains((ItemID)i.ItemID));
 				if (slot != null)
 				{
 					CastHydra(slot);
@@ -123,7 +124,7 @@
 		private static void OnLocalCastSpell(SpellbookLocalCastSpellEventArgs args)
 		{
 			var slot = args.Slot;
-			if (Utilities.SpellSlots.Contains(slot))
+			if (Enumerations.SpellSlots.Contains(slot))
 			{
 				var championSpellManaCosts = Utilities.ManaCostArray.FirstOrDefault(v => v.Key == LocalPlayer.Instance.CharName).Value;
 				if (championSpellManaCosts != null)
