@@ -39,6 +39,11 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 					100 + EnetClient.Ping);
 			}
 
+			if (LocalPlayer.Instance.IsDead || Orbwalker.IsWindingUp)
+			{
+				return;
+			}
+
 			// Cast Semi-Automatic R
 			if (this.Spell.Ready &&
 			    BaseMenu.Root["combo"]["bool"].Enabled)

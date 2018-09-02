@@ -1,7 +1,6 @@
 ﻿namespace Entropy.AIO.Champions.Lucian
 {
 	using Drawings;
-	using SDK.Enumerations;
 	using SDK.Events;
 	using SDK.Extensions.Geometry;
 	using SDK.Extensions.Objects;
@@ -43,19 +42,6 @@
 			this.W = new W().Spell;
 			this.E = new E().Spell;
 			this.R = new R().Spell;
-		}
-
-		public override void OnTick(EntropyEventArgs args)
-		{
-			if (LocalPlayer.Instance.IsDead || Orbwalker.IsWindingUp)
-			{
-				return;
-			}
-
-			if (IsCulling())
-			{
-				return;
-			}
 		}
 
 		public override void OnNewGapcloser(Gapcloser.GapcloserArgs args) { }
