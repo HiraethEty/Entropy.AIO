@@ -257,18 +257,21 @@ namespace Entropy.AIO.Champions.Lucian
 				{
 					var bestTarget = ObjectCache.EnemyHeroes
 						.Where(t =>
-							BaseMenu.Root["combo"]["whitelists"]["semiAutomaticR"][t.CharName].Enabled &&
+							BaseMenu.Root["combo"]["whitelists"]["semiAutomaticR"][t.CharName.ToLower()].Enabled &&
 							t.IsValidTarget() &&
 							!Invulnerable.IsInvulnerable(t, DamageType.Physical, false))
 						.MinBy(o => o.GetRealHealth(DamageType.Physical));
 
-					if (W.Ready &&
-						bestTarget.DistanceToPlayer() <= W.Range)
+					if (bestTarget != null)
 					{
-						W.Cast(bestTarget.Position);
-					}
+						if (W.Ready &&
+						    bestTarget.DistanceToPlayer() <= W.Range)
+						{
+							W.Cast(bestTarget.Position);
+						}
 
-					R.Cast(bestTarget.Position);
+						R.Cast(bestTarget.Position);
+					}
 				}
 				else if (IsCulling() &&
 				    !BaseMenu.Root["combo"]["key"].Enabled)
