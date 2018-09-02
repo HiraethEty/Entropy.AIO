@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Entropy.AIO.Utilities;
+using Entropy.AIO.Utility;
 using Entropy.SDK.Caching;
 using Entropy.SDK.Damage;
 using Entropy.SDK.Extensions.Objects;
@@ -48,6 +50,29 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 				{
 					this.Spell.CastOnUnit(minion);
 					break;
+				}
+			}
+
+			// Extended Q Harass
+			var extendedQHarass = BaseMenu.Root["harass"]["extendedQ"];
+			if (extendedQHarass.Enabled &&
+				LocalPlayer.Instance.MPPercent() > ManaManager.GetNeededMana(this.Spell.Slot, extendedQHarass))
+			{
+				var normalQ = Champion.Spells[0];
+				foreach (var target in Extensions.GetBestSortedTargetsInRange(this.Spell.Range).Where(t =>
+					!t.IsValidTarget(normalQ.Range) &&
+					BaseMenu.Root["harass"]["whitelist"]["extendedQ"][t.CharName.ToLower()].Enabled))
+				{
+					foreach (var minion in Extensions.GetAllGenericUnitTargetsInRange(normalQ.Range))
+					{
+						if (!Lucian.QRectangle(minion).IsInsidePolygon(normalQ.GetPrediction(target).CastPosition))
+						{
+							continue;
+						}
+
+						this.Spell.CastOnUnit(minion);
+						break;
+					}
 				}
 			}
 		}

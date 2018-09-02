@@ -5,7 +5,6 @@
 	using SDK.Extensions.Geometry;
 	using SDK.Extensions.Objects;
 	using SDK.Geometry;
-	using SDK.Orbwalking;
 	using SDK.Spells;
 	using Spells;
 	using Champion = Champion;
