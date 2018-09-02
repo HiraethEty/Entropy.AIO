@@ -7,8 +7,8 @@
 		public static void Initialize()
 		{
 			BaseMenu.Initialize();
-			ChampionLoader.Initialize();
 			BaseLogic.Initialize();
+			ChampionLoader.Initialize();
 		}
 	}
 }
