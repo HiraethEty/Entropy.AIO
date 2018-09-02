@@ -23,6 +23,7 @@ namespace Entropy.AIO.Champions.Lucian
 	internal sealed class Lucian : Champion
 	{
 		private Spell ExtendedQ { get; set; }
+		private LucianDamage DamageValues { get; }
 
 		public Lucian()
 		{
@@ -31,6 +32,7 @@ namespace Entropy.AIO.Champions.Lucian
 			Gapcloser.OnNewGapcloser += this.OnNewGapcloser;
 			Orbwalker.OnPostAttack += this.OnPostAttack;
 			Renderer.OnRender += this.OnRender;
+			this.DamageValues = new LucianDamage(new[] {this.Q, this.W, this.E, this.R});
 		}
 
 		/// <summary>
@@ -198,6 +200,8 @@ namespace Entropy.AIO.Champions.Lucian
 			this.W = new Spell(SpellSlot.W, 900f);
 			this.E = new Spell(SpellSlot.E, LocalPlayer.Instance.GetAutoAttackRange() + 425f);
 			this.R = new Spell(SpellSlot.R, 1150f);
+
+			this.Q.SetCustomDamageCalculateFunction(this.DamageValues.QDamage);
 		}
 
 		public override void OnTick(EntropyEventArgs args)
