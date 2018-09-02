@@ -1,13 +1,11 @@
 ﻿namespace Entropy.AIO.Champions.Lucian
 {
 	using Drawings;
-	using SDK.Events;
 	using SDK.Extensions.Geometry;
 	using SDK.Extensions.Objects;
 	using SDK.Geometry;
 	using SDK.Orbwalking;
 	using SDK.Orbwalking.EventArgs;
-	using SDK.Spells;
 	using Spells;
 	using Champion = Champion;
 
@@ -46,37 +44,29 @@
 			this.R = new R();
 		}
 
-		public override void OnTick(EntropyEventArgs args)
-		{
-			if (LocalPlayer.Instance.IsDead || Orbwalker.IsWindingUp)
-			{
-				return;
-			}
-
-			if (IsCulling())
-			{
-				return;
-			}
-		}
-
 		public override void OnPostAttack(OnPostAttackEventArgs args)
 		{
+			if (LocalPlayer.Instance.IsDead)
+			{
+				return;
+			}
+
 			if (this.E.Spell.Ready)
 			{
 				this.E.OnPostAttack(args);
 				return;
 			}
+
 			if (this.Q.Spell.Ready)
 			{
 				this.Q.OnPostAttack(args);
 				return;
 			}
+
 			if (this.W.Spell.Ready)
 			{
 				this.W.OnPostAttack(args);
 			}
 		}
-
-		public override void OnNewGapcloser(Gapcloser.GapcloserArgs args) { }
 	}
 }
