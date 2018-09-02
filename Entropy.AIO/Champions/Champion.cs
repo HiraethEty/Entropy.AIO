@@ -10,20 +10,20 @@ namespace Entropy.AIO.Champions
 
 	public abstract class Champion
 	{
-		internal Spell Q { get; set; }
-		internal Spell W { get; set; }
-		internal Spell E { get; set; }
-		internal Spell R { get; set; }
-		internal static Spell[] Spells { get; set; }
-		internal static BaseDamage DamageValues { get; set; }
-		internal Drawing Drawing { get; set; }
-
+		protected abstract void LoadSpells();
 		protected Champion()
 		{
 			this.LoadSpells();
 		}
-		
-		protected abstract void LoadSpells();
+
+		internal Spell Q { get; set; }
+		internal Spell W { get; set; }
+		internal Spell E { get; set; }
+		internal Spell R { get; set; }
+		internal Drawing Drawing { get; set; }
+
+		internal static Spell[] Spells { get; set; }
+		internal static BaseDamage DamageValues { get; set; }
 
 		public virtual void OnTick(EntropyEventArgs args) { }
 		public virtual void OnCustomTick(EntropyEventArgs args) { }

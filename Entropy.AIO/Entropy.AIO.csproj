@@ -71,6 +71,7 @@
     <Compile Include="Bootstrap.cs" />
     <Compile Include="Champions\Champion.cs" />
     <Compile Include="Champions\Lucian\Damage.cs" />
+    <Compile Include="Champions\Lucian\Drawings\Drawing.cs" />
     <Compile Include="Champions\Lucian\Lucian.cs" />
     <Compile Include="Champions\Lucian\Menu\Menu.cs" />
     <Compile Include="Champions\Lucian\Spells\E.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\Extensions.cs" />
+    <Compile Include="Utility\ManaManager.cs" />
     <Compile Include="Utility\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
