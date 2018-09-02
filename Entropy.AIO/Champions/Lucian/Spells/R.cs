@@ -12,6 +12,7 @@ using Entropy.SDK.Utils;
 namespace Entropy.AIO.Champions.Lucian.Spells
 {
 	using General;
+	using Misc;
 	using SDK.Events;
 	using SDK.Spells;
 
@@ -39,7 +40,7 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 
 			switch (args.Message)
 			{
-				case WindowMessage.KEYDOWN when !Lucian.IsCulling():
+				case WindowMessage.KEYDOWN when !Definitions.IsCulling():
 					if (BaseMenu.Root["combo"]["bool"].Enabled &&
 					    BaseMenu.Root["combo"]["key"].Enabled)
 					{
@@ -59,7 +60,7 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 					}
 					break;
 
-				case WindowMessage.KEYUP when Lucian.IsCulling():
+				case WindowMessage.KEYUP when Definitions.IsCulling():
 					this.Spell.Cast();
 					break;
 			}
@@ -87,27 +88,31 @@ namespace Entropy.AIO.Champions.Lucian.Spells
 				return;
 			}
 
-			var bestTarget = ObjectCache.EnemyHeroes
-				.Where(t =>
-					BaseMenu.Root["combo"]["whitelists"]["semiAutomaticR"][t.CharName.ToLower()].Enabled &&
-					t.IsValidTarget() &&
-					!Invulnerable.IsInvulnerable(t, DamageType.Physical, false))
-				.MinBy(o => o.GetRealHealth(DamageType.Physical));
-
-			if (bestTarget == null)
+			if (!Definitions.IsCulling() &&
+			    BaseMenu.Root["combo"]["key"].Enabled)
 			{
-				return;
-			}
+				var bestTarget = ObjectCache.EnemyHeroes
+					.Where(t =>
+						BaseMenu.Root["combo"]["whitelists"]["semiAutomaticR"][t.CharName.ToLower()].Enabled &&
+						t.IsValidTarget() &&
+						!Invulnerable.IsInvulnerable(t, DamageType.Physical, false))
+					.MinBy(o => o.GetRealHealth(DamageType.Physical));
 
-			if (BaseMenu.Root["combo"]["normalR"].Enabled)
-			{
-				this.Spell.Cast(bestTarget);
-			}
+				if (bestTarget == null)
+				{
+					return;
+				}
 
-			if (BaseMenu.Root["combo"]["essenceR"].Enabled &&
-			    LocalPlayer.Instance.HasItem(ItemID.EssenceReaver))
-			{
-				this.Spell.Cast(bestTarget);
+				if (BaseMenu.Root["combo"]["normalR"].Enabled)
+				{
+					this.Spell.Cast(bestTarget);
+				}
+
+				if (BaseMenu.Root["combo"]["essenceR"].Enabled &&
+				    LocalPlayer.Instance.HasItem(ItemID.EssenceReaver))
+				{
+					this.Spell.Cast(bestTarget);
+				}
 			}
 		}
 

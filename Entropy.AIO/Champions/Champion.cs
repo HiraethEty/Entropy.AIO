@@ -5,7 +5,6 @@ namespace Entropy.AIO.Champions
 	using General;
 	using Lucian.Drawings;
 	using Lucian.Spells;
-	using SDK.Events;
 	using SDK.Orbwalking.EventArgs;
 	using SDK.Spells;
 

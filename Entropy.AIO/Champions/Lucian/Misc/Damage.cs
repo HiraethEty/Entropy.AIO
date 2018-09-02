@@ -1,9 +1,9 @@
-﻿namespace Entropy.AIO.Champions.Lucian
+﻿namespace Entropy.AIO.Champions.Lucian.Misc
 {
+	using General;
 	using SDK.Damage;
 	using SDK.Extensions.Objects;
 	using SDK.Spells;
-	using General;
 
 	internal class Damage : BaseDamage
 	{
@@ -11,7 +11,7 @@
 		public Damage(Spell[] spells)
 		{
 			this.Spells = spells;
-			SetDamageCalculations();
+			this.SetDamageCalculations();
 		}
 
 		private void SetDamageCalculations()
