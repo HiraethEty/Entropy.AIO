@@ -1,16 +1,16 @@
 ﻿namespace Entropy.AIO.General
 {
 	using System.Linq;
+	using Enumerations;
 	using SDK.Caching;
+	using SDK.Damage;
 	using SDK.Enumerations;
 	using SDK.Extensions.Geometry;
 	using SDK.Extensions.Objects;
 	using SDK.Orbwalking;
 	using SDK.Orbwalking.EventArgs;
-	using SDK.Damage;
-	using Utility;
 	using ToolKit;
-	using Enumerations;
+	using Utility;
 
 	internal static class BaseLogic
 	{
@@ -28,18 +28,18 @@
 				// Disable AA until level
 				case OrbwalkingMode.Combo:
 					if (BaseMenu.Root["general"]["disableaa"].Enabled &&
-						!LocalPlayer.Instance.HasSheenLikeBuff() &&
+					    !LocalPlayer.Instance.HasSheenLikeBuff() &&
 					    LocalPlayer.Instance.Level() >= BaseMenu.Root["general"]["disableaa"].Value)
 					{
 						args.Cancel = true;
 					}
 					break;
-				
+
 				// Support mode
 				case OrbwalkingMode.Harass:
 				case OrbwalkingMode.LaneClear:
 					if (BaseMenu.Root["general"]["supportmode"].Enabled &&
-						ObjectCache.EnemyLaneMinions.Contains(args.Target))
+					    ObjectCache.EnemyLaneMinions.Contains(args.Target))
 					{
 						args.Cancel = ObjectCache.AllyHeroes.Any(a => !a.IsMe() && a.DistanceToPlayer() < 2500);
 					}
@@ -51,20 +51,16 @@
 				return;
 			}
 
-			var stormrazorSlot = LocalPlayer.Instance.InventorySlots.FirstOrDefault(s => s.IsValid && s.ItemID == (uint)ItemID.Stormrazor);
+			var stormrazorSlot = LocalPlayer.Instance.InventorySlots.FirstOrDefault(s => s.IsValid && s.ItemID == (uint) ItemID.Stormrazor);
 			if (stormrazorSlot != null)
 			{
 				var stormRazorMenu = BaseMenu.Root["general"]["stormrazor"];
 				switch (Orbwalker.Mode)
 				{
-					case OrbwalkingMode.Combo when !stormRazorMenu["combo"].Enabled:
-						return;
-					case OrbwalkingMode.Harass when !stormRazorMenu["mixed"].Enabled:
-						return;
-					case OrbwalkingMode.LaneClear when !stormRazorMenu["laneclear"].Enabled:
-						return;
-					case OrbwalkingMode.LastHit when !stormRazorMenu["lasthit"].Enabled:
-						return;
+					case OrbwalkingMode.Combo when !stormRazorMenu["combo"].Enabled: return;
+					case OrbwalkingMode.Harass when !stormRazorMenu["mixed"].Enabled: return;
+					case OrbwalkingMode.LaneClear when !stormRazorMenu["laneclear"].Enabled: return;
+					case OrbwalkingMode.LastHit when !stormRazorMenu["lasthit"].Enabled: return;
 				}
 
 				if (!LocalPlayer.Instance.HasBuff("windbladebuff"))
@@ -190,7 +186,8 @@
 					case OrbwalkingMode.Harass:
 						var target = Orbwalker.GetOrbwalkingTarget() as AIHeroClient;
 						if (target != null &&
-						    target.GetRealHealth(DamageType.Physical) <= LocalPlayer.Instance.GetAutoAttackDamage(target) * BaseMenu.Root["general"]["preservespells"][args.Slot.ToString().ToLower()].Value)
+						    target.GetRealHealth(DamageType.Physical) <=
+						    LocalPlayer.Instance.GetAutoAttackDamage(target) * BaseMenu.Root["general"]["preservespells"][args.Slot.ToString().ToLower()].Value)
 						{
 							args.Execute = false;
 						}

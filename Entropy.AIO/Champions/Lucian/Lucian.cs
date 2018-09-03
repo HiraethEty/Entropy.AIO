@@ -5,7 +5,6 @@ using Entropy.SDK.Extensions.Objects;
 
 namespace Entropy.AIO.Champions.Lucian
 {
-	using Misc;
 	using SDK.Orbwalking;
 	using SDK.Events;
 	using SDK.Utils;
@@ -19,8 +18,7 @@ namespace Entropy.AIO.Champions.Lucian
 			Spells.Initialize();
 			Menu.Initialize();
 			Methods.Initialize();
-			this.DamageValues = new Damage(new[] {Q, W});
-			new Drawings.Drawings(new[] {Q, W, E, R});
+			new Drawings(new[] {Q, W, E, R});
 		}
 
 		public static void OnWndProc(GameWndProcEventArgs args)

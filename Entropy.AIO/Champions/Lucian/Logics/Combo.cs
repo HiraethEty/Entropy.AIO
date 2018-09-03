@@ -1,16 +1,16 @@
-﻿using System.Linq;
-using Entropy.AIO.Champions.Lucian.Misc;
-using Entropy.SDK.Caching;
-using Entropy.SDK.Enumerations;
-using Entropy.SDK.Extensions;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics
 {
+	using System.Linq;
 	using General;
+	using Misc;
+	using SDK.Caching;
 	using SDK.Damage;
+	using SDK.Enumerations;
+	using SDK.Extensions;
 	using SDK.Extensions.Geometry;
 	using SDK.Extensions.Objects;
 	using Utilities;
+	using Champion = Champions.Champion;
 
 	internal class Combo
 	{
@@ -46,11 +46,11 @@ namespace Entropy.AIO.Champions.Lucian.Logics
 			}
 
 			var bestTarget = ObjectCache.EnemyHeroes
-				.Where(t =>
-					BaseMenu.Root["combo"]["whitelists"]["semiAutomaticR"][t.CharName.ToLower()].Enabled &&
-					t.IsValidTarget() &&
-					!Invulnerable.IsInvulnerable(t, DamageType.Physical, false))
-				.MinBy(o => o.GetRealHealth(DamageType.Physical));
+			                            .Where(t =>
+				                                   BaseMenu.Root["combo"]["whitelists"]["semiAutomaticR"][t.CharName.ToLower()].Enabled &&
+				                                   t.IsValidTarget() &&
+				                                   !Invulnerable.IsInvulnerable(t, DamageType.Physical, false))
+			                            .MinBy(o => o.GetRealHealth(DamageType.Physical));
 
 			if (bestTarget == null ||
 			    Definitions.HasPassive() && bestTarget.DistanceToPlayer() <= LocalPlayer.Instance.GetAutoAttackRange(bestTarget))

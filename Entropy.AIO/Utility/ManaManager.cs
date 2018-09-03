@@ -1,8 +1,7 @@
-﻿using Entropy.AIO.General;
-
-namespace Entropy.AIO.Utility
+﻿namespace Entropy.AIO.Utility
 {
 	using System.Linq;
+	using General;
 	using SDK.Extensions.Objects;
 	using SDK.UI;
 
@@ -17,15 +16,15 @@ namespace Entropy.AIO.Utility
 		{
 			var ignoreManaManagerMenu = BaseMenu.Root["general"]["nomanagerifblue"];
 			if (ignoreManaManagerMenu != null &&
-				LocalPlayer.Instance.HasBuff("crestoftheancientgolem") &&
-				ignoreManaManagerMenu.Enabled)
+			    LocalPlayer.Instance.HasBuff("crestoftheancientgolem") &&
+			    ignoreManaManagerMenu.Enabled)
 			{
 				return 0;
 			}
 
 			var spellData = Utilities.ManaCostArray.FirstOrDefault(v => v.Key == LocalPlayer.Instance.CharName);
 			var cost = spellData.Value[slot][LocalPlayer.Instance.Spellbook.GetSpell(slot).Level - 1];
-			return (int)(value.Value + cost / LocalPlayer.Instance.MaxMP * 100);
+			return (int) (value.Value + cost / LocalPlayer.Instance.MaxMP * 100);
 		}
 
 		/// <summary>
@@ -35,7 +34,7 @@ namespace Entropy.AIO.Utility
 		{
 			var spellData = Utilities.ManaCostArray.FirstOrDefault(v => v.Key == LocalPlayer.Instance.CharName);
 			var cost = spellData.Value[slot][LocalPlayer.Instance.Spellbook.GetSpell(slot).Level - 1];
-			return (int)(value.Value + cost / LocalPlayer.Instance.MaxHP * 100);
+			return (int) (value.Value + cost / LocalPlayer.Instance.MaxHP * 100);
 		}
 
 		#endregion

@@ -5,12 +5,12 @@
 
 	internal class Spells
 	{
+		public static Spell ExtendedQ { get; private set; }
+
 		public Spells()
 		{
 			Initialize();
 		}
-
-		public static Spell ExtendedQ { get; private set; }
 
 		public static void Initialize()
 		{
@@ -23,6 +23,8 @@
 			ExtendedQ.SetSkillshot(0.25f, 65f, float.MaxValue, collision: false);
 			Champion.W.SetSkillshot(0.25f, 80f, 1600f, collision: false);
 			Champion.R.SetSkillshot(0.25f, 110f, 2500f, collision: false);
+
+			new Damage(new[] {Champion.Q, Champion.W});
 		}
 	}
 }

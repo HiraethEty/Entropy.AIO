@@ -17,10 +17,10 @@
 			}
 
 			foreach (var target in ObjectCache.EnemyHeroes
-				.Where(t =>
-					t.IsValidTarget(Champion.Q.Range) &&
-					!Invulnerable.IsInvulnerable(t, DamageType.Physical, damage: Champion.Q.GetDamage(t)) &&
-					Champion.Q.GetDamage(t) >= t.GetRealHealth(DamageType.Physical)))
+			                                  .Where(t =>
+				                                         t.IsValidTarget(Champion.Q.Range) &&
+				                                         !Invulnerable.IsInvulnerable(t, DamageType.Physical, damage: Champion.Q.GetDamage(t)) &&
+				                                         Champion.Q.GetDamage(t) >= t.GetRealHealth(DamageType.Physical)))
 			{
 				Champion.Q.CastOnUnit(target);
 				return;
@@ -35,13 +35,14 @@
 			}
 
 			foreach (var target in ObjectCache.EnemyHeroes
-				.Where(t =>
-					t.IsValidTarget(Spells.ExtendedQ.Range) &&
-					!Invulnerable.IsInvulnerable(t, DamageType.Physical, damage: Champion.Q.GetDamage(t)) &&
-					Champion.Q.GetDamage(t) >= t.GetRealHealth(DamageType.Physical)))
+			                                  .Where(t =>
+				                                         t.IsValidTarget(Spells.ExtendedQ.Range) &&
+				                                         !Invulnerable.IsInvulnerable(t, DamageType.Physical, damage: Champion.Q.GetDamage(t)) &&
+				                                         Champion.Q.GetDamage(t) >= t.GetRealHealth(DamageType.Physical)))
 			{
 				foreach (var minion in ObjectCache.EnemyLaneMinions
-					.Where(m => m.IsValidTarget(Champion.Q.Range) && Definitions.QRectangle(m).IsInsidePolygon(Spells.ExtendedQ.GetPrediction(target).CastPosition)))
+				                                  .Where(m => m.IsValidTarget(Champion.Q.Range) &&
+				                                              Definitions.QRectangle(m).IsInsidePolygon(Spells.ExtendedQ.GetPrediction(target).CastPosition)))
 				{
 					Champion.Q.CastOnUnit(minion);
 					return;
@@ -57,10 +58,10 @@
 			}
 
 			foreach (var target in ObjectCache.EnemyHeroes
-				.Where(t =>
-					t.IsValidTarget(Champion.W.Range) &&
-					!Invulnerable.IsInvulnerable(t, DamageType.Magical, damage: Champion.W.GetDamage(t)) &&
-					Champion.W.GetDamage(t) >= t.GetRealHealth(DamageType.Magical)))
+			                                  .Where(t =>
+				                                         t.IsValidTarget(Champion.W.Range) &&
+				                                         !Invulnerable.IsInvulnerable(t, DamageType.Magical, damage: Champion.W.GetDamage(t)) &&
+				                                         Champion.W.GetDamage(t) >= t.GetRealHealth(DamageType.Magical)))
 			{
 				Champion.W.Cast(target);
 				return;

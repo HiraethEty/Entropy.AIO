@@ -3,16 +3,16 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-	using SDK.Enumerations;
-	using SDK.Extensions.Objects;
-	using SDK.Spells;
+	using Enumerations;
 	using SDK.Caching;
+	using SDK.Enumerations;
 	using SDK.Events;
 	using SDK.Extensions;
 	using SDK.Extensions.Geometry;
+	using SDK.Extensions.Objects;
 	using SDK.Orbwalking;
+	using SDK.Spells;
 	using SharpDX;
-	using Enumerations;
 
 	internal static class Utilities
 	{
@@ -22,10 +22,7 @@
 		///     Returns if a Vector2 position is On Screen.
 		/// </summary>
 		/// <param name="position">The position.</param>
-		public static bool OnScreen(this Vector2 position)
-		{
-			return !position.IsZero;
-		}
+		public static bool OnScreen(this Vector2 position) => !position.IsZero;
 
 		/// <summary>
 		///     List of the Pet names.
@@ -44,7 +41,7 @@
 		{
 			name = name.ToLower();
 			return name.Contains("attack") && !Orbwalker.NoAttacks.Contains(name) ||
-				   Orbwalker.SpecialAttacks.Contains(name);
+			       Orbwalker.SpecialAttacks.Contains(name);
 		}
 
 		/// <returns>
@@ -52,7 +49,7 @@
 		/// </returns>
 		public static bool HasSheenLikeBuff(this AIHeroClient unit)
 		{
-			var sheenLikeBuffNames = new[]{"sheen", "LichBane", "dianaarcready", "ItemFrozenFist", "sonapassiveattack"};
+			var sheenLikeBuffNames = new[] {"sheen", "LichBane", "dianaarcready", "ItemFrozenFist", "sonapassiveattack"};
 			return sheenLikeBuffNames.Any(b => LocalPlayer.Instance.HasBuff(b));
 		}
 
@@ -74,12 +71,12 @@
 				return false;
 			}
 
-			var slot = LocalPlayer.Instance.InventorySlots.FirstOrDefault(s => Enumerations.TearLikeItems.Contains((ItemID)s.ItemID));
+			var slot = LocalPlayer.Instance.InventorySlots.FirstOrDefault(s => Enumerations.TearLikeItems.Contains((ItemID) s.ItemID));
 			if (slot != null)
 			{
 				var spellSlot = slot.Slot;
 				if (spellSlot != SpellSlot.Unknown &&
-					!LocalPlayer.Instance.Spellbook.GetSpellState(spellSlot).HasFlag(SpellState.Cooldown))
+				    !LocalPlayer.Instance.Spellbook.GetSpellState(spellSlot).HasFlag(SpellState.Cooldown))
 				{
 					return true;
 				}
@@ -110,7 +107,7 @@
 		/// </summary>
 		public static bool IsBeingGrabbed(this AIHeroClient hero)
 		{
-			var grabsBuffs = new[] { "ThreshQ", "rocketgrab2" };
+			var grabsBuffs = new[] {"ThreshQ", "rocketgrab2"};
 			return hero.GetActiveBuffs().Any(b => grabsBuffs.Contains(b.Name));
 		}
 
@@ -123,21 +120,21 @@
 			var immobileObjectLinked =
 				ObjectCache.AllGameObjects.FirstOrDefault(t => t.IsValid && t.Name == "LifeAura.troy");
 			if (immobileObjectLinked != null &&
-				ObjectCache.AllHeroes.MinBy(t => t.Distance(immobileObjectLinked)) == hero)
+			    ObjectCache.AllHeroes.MinBy(t => t.Distance(immobileObjectLinked)) == hero)
 			{
 				return true;
 			}
 
 			// Minions: Zac Passive
 			if (hero.CharName == "Zac" &&
-				ObjectCache.AllMinions.Any(m =>
-					m.Team == hero.Team && m.CharName == "ZacRebirthBloblet" && m.Distance(hero) < 500))
+			    ObjectCache.AllMinions.Any(m =>
+				                               m.Team == hero.Team && m.CharName == "ZacRebirthBloblet" && m.Distance(hero) < 500))
 			{
 				return true;
 			}
 
 			// Buffs: Zilean's Chronoshift, Zhonyas, Stopwatch, Anivia Egg,
-			var immobileBuffs = new[] { "chronorevive", "zhonyasringshield", "rebirth" };
+			var immobileBuffs = new[] {"chronorevive", "zhonyasringshield", "rebirth"};
 			if (hero.GetActiveBuffs().Any(b => immobileBuffs.Contains(b.Name)))
 			{
 				return true;
@@ -177,33 +174,30 @@
 		{
 			var hero = unit as AIHeroClient;
 			if (hero != null &&
-				hero.HasImmobileBuff())
+			    hero.HasImmobileBuff())
 			{
 				return true;
 			}
 
 			if (unit.IsDead ||
-				unit.IsDashing() ||
-				unit.HasBuffOfType(BuffType.Knockback))
+			    unit.IsDashing() ||
+			    unit.HasBuffOfType(BuffType.Knockback))
 			{
 				return false;
 			}
 
-			return unit.GetActiveBuffs().Any(b =>
-				b.IsHardCC() &&
-				b.GetRemainingBuffTime() >= minTime);
+			return unit.GetActiveBuffs()
+			           .Any(b =>
+				                b.IsHardCC() &&
+				                b.GetRemainingBuffTime() >= minTime);
 		}
 
 		/// <returns>
 		///     true if the sender is a hero, a turret or an important jungle monster; otherwise, false.
 		/// </returns>
-		public static bool ShouldShieldAgainstSender(AIBaseClient sender)
-		{
-			return
-				ObjectCache.EnemyHeroes.Contains(sender) ||
-				ObjectCache.EnemyTurrets.Contains(sender) ||
-				ObjectCache.LargeJungleMinions.Concat(ObjectCache.LegendaryJungleMinions).Contains(sender);
-		}
+		public static bool ShouldShieldAgainstSender(AIBaseClient sender) => ObjectCache.EnemyHeroes.Contains(sender) ||
+		                                                                     ObjectCache.EnemyTurrets.Contains(sender) ||
+		                                                                     ObjectCache.LargeJungleMinions.Concat(ObjectCache.LegendaryJungleMinions).Contains(sender);
 
 		/// <summary>
 		///     Returns whether the hero is in fountain range.
@@ -215,7 +209,7 @@
 			var heroTeam = hero.Team == GameObjectTeam.Order ? "Order" : "Chaos";
 			var fountainTurret =
 				ObjectCache.AllGameObjects.FirstOrDefault(o =>
-					o.IsValid && o.Name == "Turret_" + heroTeam + "TurretShrine");
+					                                          o.IsValid && o.Name == "Turret_" + heroTeam + "TurretShrine");
 			if (fountainTurret == null)
 			{
 				return false;
@@ -243,7 +237,7 @@
 						{SpellSlot.E, new[] {40, 20, 30, 10, 0}},
 						{SpellSlot.R, new[] {100, 100, 100}}
 					}
-				},
+				}
 			};
 
 		/// <summary>

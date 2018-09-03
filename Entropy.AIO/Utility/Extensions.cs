@@ -19,27 +19,19 @@
 		/// <summary>
 		///     Gets the valid generic (lane or jungle) minions targets in the game.
 		/// </summary>
-		public static List<AIMinionClient> GetAllGenericMinionsTargets()
-		{
-			return GetAllGenericMinionsTargetsInRange(float.MaxValue);
-		}
+		public static List<AIMinionClient> GetAllGenericMinionsTargets() => GetAllGenericMinionsTargetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the valid generic (lane or jungle) minions targets in the game inside a determined range.
 		/// </summary>
-		public static List<AIMinionClient> GetAllGenericMinionsTargetsInRange(float range)
-		{
-			return GetEnemyLaneMinionsTargetsInRange(range).Concat(GetGenericJungleMinionsTargetsInRange(range))
-				.ToList();
-		}
+		public static List<AIMinionClient> GetAllGenericMinionsTargetsInRange(float range) => GetEnemyLaneMinionsTargetsInRange(range)
+			.Concat(GetGenericJungleMinionsTargetsInRange(range))
+			.ToList();
 
 		/// <summary>
 		///     Gets the valid generic unit targets in the game.
 		/// </summary>
-		public static List<AIBaseClient> GetAllGenericUnitTargets()
-		{
-			return GetAllGenericUnitTargetsInRange(float.MaxValue);
-		}
+		public static List<AIBaseClient> GetAllGenericUnitTargets() => GetAllGenericUnitTargetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the valid generic unit targets in the game inside a determined range.
@@ -47,16 +39,14 @@
 		public static List<AIBaseClient> GetAllGenericUnitTargetsInRange(float range)
 		{
 			return ObjectCache.EnemyHeroes.Where(h => h.IsValidTarget(range))
-				.Concat<AIBaseClient>(GetAllGenericMinionsTargetsInRange(range)).ToList();
+			                  .Concat<AIBaseClient>(GetAllGenericMinionsTargetsInRange(range))
+			                  .ToList();
 		}
 
 		/// <summary>
 		///     Gets the valid enemy pet targets in the game.
 		/// </summary>
-		public static List<AIMinionClient> GetEnemyPets()
-		{
-			return GetEnemyPetsInRange(float.MaxValue);
-		}
+		public static List<AIMinionClient> GetEnemyPets() => GetEnemyPetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the valid enemy pets in the game inside a determined range.
@@ -64,16 +54,14 @@
 		public static List<AIMinionClient> GetEnemyPetsInRange(float range)
 		{
 			return ObjectCache.EnemyMinions
-				.Where(h => h.DistanceToPlayer() < range && Utilities.PetList.Contains(h.Name)).ToList();
+			                  .Where(h => h.DistanceToPlayer() < range && Utilities.PetList.Contains(h.Name))
+			                  .ToList();
 		}
 
 		/// <summary>
 		///     Gets the valid ally pet targets in the game.
 		/// </summary>
-		public static List<AIMinionClient> GetAllyPets()
-		{
-			return GetAllyPetsInRange(float.MaxValue);
-		}
+		public static List<AIMinionClient> GetAllyPets() => GetAllyPetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the valid ally pets in the game inside a determined range.
@@ -81,16 +69,14 @@
 		public static List<AIMinionClient> GetAllyPetsInRange(float range)
 		{
 			return ObjectCache.AllyMinions
-				.Where(h => h.DistanceToPlayer() < range && Utilities.PetList.Contains(h.Name)).ToList();
+			                  .Where(h => h.DistanceToPlayer() < range && Utilities.PetList.Contains(h.Name))
+			                  .ToList();
 		}
 
 		/// <summary>
 		///     Gets the valid ally heroes targets in the game.
 		/// </summary>
-		public static List<AIHeroClient> GetAllyHeroesTargets()
-		{
-			return GetAllyHeroesTargetsInRange(float.MaxValue);
-		}
+		public static List<AIHeroClient> GetAllyHeroesTargets() => GetAllyHeroesTargetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the valid ally heroes targets in the game inside a determined range.
@@ -103,10 +89,7 @@
 		/// <summary>
 		///     Gets the valid ally lane minions targets in the game.
 		/// </summary>
-		public static List<AIMinionClient> GetAllyLaneMinionsTargets()
-		{
-			return GetAllyLaneMinionsTargetsInRange(float.MaxValue);
-		}
+		public static List<AIMinionClient> GetAllyLaneMinionsTargets() => GetAllyLaneMinionsTargetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the valid ally lane minions targets in the game inside a determined range.
@@ -119,27 +102,22 @@
 		/// <summary>
 		///     Gets the best valid enemy heroes targets in the game.
 		/// </summary>
-		public static List<AIHeroClient> GetBestEnemyHeroesTargets()
-		{
-			return GetBestEnemyHeroesTargetsInRange(float.MaxValue);
-		}
+		public static List<AIHeroClient> GetBestEnemyHeroesTargets() => GetBestEnemyHeroesTargetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the best valid enemy heroes targets in the game inside a determined range.
 		/// </summary>
 		public static List<AIHeroClient> GetBestEnemyHeroesTargetsInRange(float range)
 		{
-			return TargetSelector.GetOrderedTargets(ObjectCache.EnemyHeroes).Where(t => t.DistanceToPlayer() < range)
-				.ToList();
+			return TargetSelector.GetOrderedTargets(ObjectCache.EnemyHeroes)
+			                     .Where(t => t.DistanceToPlayer() < range)
+			                     .ToList();
 		}
 
 		/// <summary>
 		///     Gets the best valid enemy hero target in the game.
 		/// </summary>
-		public static AIHeroClient GetBestEnemyHeroTarget()
-		{
-			return GetBestEnemyHeroTargetInRange(float.MaxValue);
-		}
+		public static AIHeroClient GetBestEnemyHeroTarget() => GetBestEnemyHeroTargetInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the best valid enemy hero target in the game inside a determined range.
@@ -156,20 +134,20 @@
 
 			var orbTarget = Orbwalker.GetOrbwalkingTarget() as AIHeroClient;
 			if (orbTarget != null &&
-				orbTarget.IsValidTarget(range))
+			    orbTarget.IsValidTarget(range))
 			{
 				return orbTarget;
 			}
 
 			var tsTarget = TargetSelector.LastTarget;
 			if (tsTarget != null &&
-				tsTarget.IsValidTarget(range))
+			    tsTarget.IsValidTarget(range))
 			{
 				return tsTarget;
 			}
 
 			var lastTarget = ObjectCache.EnemyHeroes.FirstOrDefault(t =>
-				t.IsValidTarget(range) && !t.IsZombie() && !Invulnerable.IsInvulnerable(t));
+				                                                        t.IsValidTarget(range) && !t.IsZombie() && !Invulnerable.IsInvulnerable(t));
 			if (lastTarget != null)
 			{
 				return lastTarget;
@@ -179,7 +157,7 @@
 		}
 
 		/// <summary>
-		///     Returns true if this unit is able to be targetted by spells 
+		///     Returns true if this unit is able to be targetted by spells
 		/// </summary>
 		/// <param name="unit">The unit.</param>
 		/// <param name="range">The range.</param>
@@ -217,9 +195,9 @@
 			bool ignoreShields = false)
 		{
 			var target = TargetSelector.GetOrderedTargets(ObjectCache.EnemyHeroes)
-				.FirstOrDefault(t =>
-					!t.IsZombie() &&
-					!Invulnerable.IsInvulnerable(t, damageType, ignoreShields));
+			                           .FirstOrDefault(t =>
+				                                           !t.IsZombie() &&
+				                                           !Invulnerable.IsInvulnerable(t, damageType, ignoreShields));
 			return target;
 		}
 
@@ -232,20 +210,17 @@
 			bool ignoreShields = false)
 		{
 			var targets = TargetSelector.GetOrderedTargets(ObjectCache.EnemyHeroes)
-				.Where(t =>
-					!t.IsZombie() &&
-					t.IsValidTarget(range) &&
-					!Invulnerable.IsInvulnerable(t, damageType, ignoreShields));
+			                            .Where(t =>
+				                                   !t.IsZombie() &&
+				                                   t.IsValidTarget(range) &&
+				                                   !Invulnerable.IsInvulnerable(t, damageType, ignoreShields));
 			return targets;
 		}
 
 		/// <summary>
 		///     Gets the valid enemy heroes targets in the game.
 		/// </summary>
-		public static List<AIHeroClient> GetEnemyHeroesTargets()
-		{
-			return GetEnemyHeroesTargetsInRange(float.MaxValue);
-		}
+		public static List<AIHeroClient> GetEnemyHeroesTargets() => GetEnemyHeroesTargetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the valid enemy heroes targets in the game inside a determined range.
@@ -258,10 +233,7 @@
 		/// <summary>
 		///     Gets the valid lane minions targets in the game.
 		/// </summary>
-		public static List<AIMinionClient> GetEnemyLaneMinionsTargets()
-		{
-			return GetEnemyLaneMinionsTargetsInRange(float.MaxValue);
-		}
+		public static List<AIMinionClient> GetEnemyLaneMinionsTargets() => GetEnemyLaneMinionsTargetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the valid lane minions targets in the game inside a determined range.
@@ -274,10 +246,7 @@
 		/// <summary>
 		///     Gets the valid generic (All but small) jungle minions targets in the game.
 		/// </summary>
-		public static List<AIMinionClient> GetGenericJungleMinionsTargets()
-		{
-			return GetGenericJungleMinionsTargetsInRange(float.MaxValue);
-		}
+		public static List<AIMinionClient> GetGenericJungleMinionsTargets() => GetGenericJungleMinionsTargetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the valid generic (All but small) jungle minions targets in the game inside a determined range.
@@ -285,17 +254,14 @@
 		public static List<AIMinionClient> GetGenericJungleMinionsTargetsInRange(float range)
 		{
 			return ObjectCache.JungleMinions
-				.Where(m => (!m.IsSmallJungleMinion() || BaseMenu.Root["general"]["junglesmall"].Enabled) && m.IsValidSpellTarget(range))
-				.ToList();
+			                  .Where(m => (!m.IsSmallJungleMinion() || BaseMenu.Root["general"]["junglesmall"].Enabled) && m.IsValidSpellTarget(range))
+			                  .ToList();
 		}
 
 		/// <summary>
 		///     Gets the valid large jungle minions targets in the game.
 		/// </summary>
-		public static List<AIMinionClient> GetLargeJungleMinionsTargets()
-		{
-			return GetLargeJungleMinionsTargetsInRange(float.MaxValue);
-		}
+		public static List<AIMinionClient> GetLargeJungleMinionsTargets() => GetLargeJungleMinionsTargetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the valid large jungle minions targets in the game inside a determined range.
@@ -308,10 +274,7 @@
 		/// <summary>
 		///     Gets the valid legendary jungle minions targets in the game.
 		/// </summary>
-		public static List<AIMinionClient> GetLegendaryJungleMinionsTargets()
-		{
-			return GetLegendaryJungleMinionsTargetsInRange(float.MaxValue);
-		}
+		public static List<AIMinionClient> GetLegendaryJungleMinionsTargets() => GetLegendaryJungleMinionsTargetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the valid legendary jungle minions targets in the game inside a determined range.
@@ -324,10 +287,7 @@
 		/// <summary>
 		///     Gets the valid small jungle minions targets in the game.
 		/// </summary>
-		public static List<AIMinionClient> GetSmallJungleMinionsTargets()
-		{
-			return GetSmallJungleMinionsTargetsInRange(float.MaxValue);
-		}
+		public static List<AIMinionClient> GetSmallJungleMinionsTargets() => GetSmallJungleMinionsTargetsInRange(float.MaxValue);
 
 		/// <summary>
 		///     Gets the valid small jungle minions targets in the game inside a determined range.

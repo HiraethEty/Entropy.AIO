@@ -1,9 +1,9 @@
 ﻿namespace Entropy.AIO.General
 {
+	using Enumerations;
 	using SDK.Orbwalking;
 	using SDK.UI;
 	using SDK.UI.Components;
-	using Enumerations;
 
 	internal static class BaseMenu
 	{
@@ -41,7 +41,7 @@
 				},
 				new Menu("drawing", "Drawing Menu")
 				{
-					new MenuList("colorscheme", "Color Scheme", new []{"Bold", "Flat", "Feminine"})
+					new MenuList("colorscheme", "Color Scheme", new[] {"Bold", "Flat", "Feminine"})
 				}
 			};
 

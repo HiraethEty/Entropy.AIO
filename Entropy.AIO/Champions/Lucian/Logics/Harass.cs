@@ -19,9 +19,9 @@
 			}
 
 			foreach (var target in Extensions.GetBestSortedTargetsInRange(Spells.ExtendedQ.Range)
-				.Where(t =>
-					!t.IsValidTarget(Champion.Q.Range) &&
-					BaseMenu.Root["harass"]["whitelists"]["extendedQ"][t.CharName.ToLower()].Enabled))
+			                                 .Where(t =>
+				                                        !t.IsValidTarget(Champion.Q.Range) &&
+				                                        BaseMenu.Root["harass"]["whitelists"]["extendedQ"][t.CharName.ToLower()].Enabled))
 			{
 				foreach (var minion in Extensions.GetAllGenericUnitTargetsInRange(Champion.Q.Range))
 				{
@@ -46,9 +46,9 @@
 			}
 
 			foreach (var target in Extensions.GetBestSortedTargetsInRange(Champion.Q.Range)
-				.Where(t =>
-					t.IsValidTarget(Champion.Q.Range) &&
-					BaseMenu.Root["harass"]["whitelists"]["normalQ"][t.CharName.ToLower()].Enabled))
+			                                 .Where(t =>
+				                                        t.IsValidTarget(Champion.Q.Range) &&
+				                                        BaseMenu.Root["harass"]["whitelists"]["normalQ"][t.CharName.ToLower()].Enabled))
 			{
 				Champion.Q.CastOnUnit(target);
 				break;
@@ -65,9 +65,9 @@
 			}
 
 			foreach (var target in Extensions.GetBestSortedTargetsInRange(Champion.W.Range)
-				.Where(t =>
-					!t.IsValidTarget(Champion.W.Range) &&
-					BaseMenu.Root["harass"]["whitelists"]["w"][t.CharName.ToLower()].Enabled))
+			                                 .Where(t =>
+				                                        !t.IsValidTarget(Champion.W.Range) &&
+				                                        BaseMenu.Root["harass"]["whitelists"]["w"][t.CharName.ToLower()].Enabled))
 			{
 				Champion.W.Cast(target);
 				break;

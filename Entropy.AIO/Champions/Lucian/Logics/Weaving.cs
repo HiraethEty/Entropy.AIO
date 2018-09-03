@@ -29,7 +29,7 @@
 
 				case 2:
 					Champion.E.Cast(LocalPlayer.Instance.Position.Extend(Hud.CursorPositionUnclipped,
-						LocalPlayer.Instance.BoundingRadius));
+					                                                     LocalPlayer.Instance.BoundingRadius));
 					return;
 			}
 		}
@@ -53,7 +53,7 @@
 		private static bool CanCastE(AttackableUnit target)
 		{
 			if (LocalPlayer.Instance.Distance(Hud.CursorPositionUnclipped) <= LocalPlayer.Instance.GetAutoAttackRange() &&
-				BaseMenu.Root["miscellaneous"]["e"]["onlyeifmouseoutaarange"].Enabled)
+			    BaseMenu.Root["miscellaneous"]["e"]["onlyeifmouseoutaarange"].Enabled)
 			{
 				return false;
 			}
@@ -62,16 +62,17 @@
 			if (ObjectCache.EnemyHeroes.Count() > 1)
 			{
 				if (BaseMenu.Root["miscellaneous"]["e"]["erangecheck"].Enabled &&
-					posAfterE.EnemyHeroesCount(LocalPlayer.Instance.GetAutoAttackRange() +
-											   LocalPlayer.Instance.BoundingRadius) >= BaseMenu.Root["miscellaneous"]["e"]["erangecheck"].Value)
+				    posAfterE.EnemyHeroesCount(LocalPlayer.Instance.GetAutoAttackRange() +
+				                               LocalPlayer.Instance.BoundingRadius) >=
+				    BaseMenu.Root["miscellaneous"]["e"]["erangecheck"].Value)
 				{
 					return false;
 				}
 			}
 
 			if (posAfterE.Distance(target) >
-				LocalPlayer.Instance.GetAutoAttackRange(target) &&
-				BaseMenu.Root["miscellaneous"]["e"]["noeoutaarange"].Enabled)
+			    LocalPlayer.Instance.GetAutoAttackRange(target) &&
+			    BaseMenu.Root["miscellaneous"]["e"]["noeoutaarange"].Enabled)
 			{
 				return false;
 			}
@@ -83,11 +84,11 @@
 		{
 			Vector3 point;
 			if (LocalPlayer.Instance.Position.IsUnderEnemyTurret() ||
-				LocalPlayer.Instance.Distance(Hud.CursorPositionUnclipped) <
-				LocalPlayer.Instance.GetAutoAttackRange())
+			    LocalPlayer.Instance.Distance(Hud.CursorPositionUnclipped) <
+			    LocalPlayer.Instance.GetAutoAttackRange())
 			{
 				point = LocalPlayer.Instance.Position.Extend(Hud.CursorPositionUnclipped,
-					LocalPlayer.Instance.BoundingRadius);
+				                                             LocalPlayer.Instance.BoundingRadius);
 			}
 			else
 			{
