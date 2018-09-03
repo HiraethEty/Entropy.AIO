@@ -10,7 +10,7 @@
 			Initialize();
 		}
 
-		public static Spell ExtendedQ { get; set; }
+		public static Spell ExtendedQ { get; private set; }
 
 		public static void Initialize()
 		{

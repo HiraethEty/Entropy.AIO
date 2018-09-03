@@ -89,7 +89,6 @@
     <Compile Include="Champions\Lucian\Spells\Spells.cs" />
     <Compile Include="Champions\Lucian\Logics\Weaving.cs" />
     <Compile Include="Enumerations\Enumerations.cs" />
-    <Compile Include="General\BaseDamage.cs" />
     <Compile Include="General\BaseLogic.cs" />
     <Compile Include="General\BaseMenu.cs" />
     <Compile Include="General\ChampionLoader.cs" />

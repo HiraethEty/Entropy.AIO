@@ -15,9 +15,10 @@
 
 		private void OnRender(EntropyEventArgs args)
 		{
+			var colorScheme = ColorScheme.ColorSchemes[BaseMenu.Root["drawing"]["colorscheme"].Value];
 			if (Champions.Lucian.Spells.ExtendedQ.Ready && BaseMenu.Root["drawing"]["qextended"].Enabled)
 			{
-				Renderer.DrawCircularRangeIndicator(LocalPlayer.Instance.Position, this.Spells[1].Range, Enumerations.FlatColors[4]);
+				Renderer.DrawCircularRangeIndicator(LocalPlayer.Instance.Position, this.Spells[1].Range, colorScheme[4]);
 			}
 			
 			foreach (var spell in this.Spells)
@@ -29,7 +30,7 @@
 					continue;
 				}
 
-				Renderer.DrawCircularRangeIndicator(LocalPlayer.Instance.Position, spell.Range, Enumerations.FlatColors[(int)spell.Slot]);
+				Renderer.DrawCircularRangeIndicator(LocalPlayer.Instance.Position, spell.Range, colorScheme[(int)spell.Slot]);
 			}
 		}
 	}

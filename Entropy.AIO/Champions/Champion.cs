@@ -1,6 +1,6 @@
 ﻿namespace Entropy.AIO.Champions
 {
-	using General;
+	using Lucian.Misc;
 	using SDK.Spells;
 
 	public abstract class Champion
@@ -10,6 +10,6 @@
 		internal static Spell E { get; set; }
 		internal static Spell R { get; set; }
 
-		internal BaseDamage DamageValues { get; set; }
+		internal Damage DamageValues { get; set; }
 	}
 }

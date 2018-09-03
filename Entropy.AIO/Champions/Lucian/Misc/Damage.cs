@@ -5,7 +5,7 @@
 	using SDK.Extensions.Objects;
 	using SDK.Spells;
 
-	internal class Damage : BaseDamage
+	internal class Damage
 	{
 		private readonly Spell[] Spells;
 		public Damage(Spell[] spells)
@@ -20,7 +20,7 @@
 			Champion.W.SetCustomDamageCalculateFunction(this.WDamage);
 		}
 
-		public override float QDamage(AIBaseClient target)
+		private float QDamage(AIBaseClient target)
 		{
 			var qLevel = this.Spells[0].Level;
 
@@ -31,7 +31,7 @@
 			return LocalPlayer.Instance.CalculateDamage(target, DamageType.Physical, qBaseDamage);
 		}
 
-		public override float WDamage(AIBaseClient target)
+		private float WDamage(AIBaseClient target)
 		{
 			var wLevel = this.Spells[2].Level;
 

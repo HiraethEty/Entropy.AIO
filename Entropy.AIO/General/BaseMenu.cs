@@ -38,6 +38,10 @@
 						new MenuSeperator("separator", "Only works for inside-AA-range targets"),
 						new MenuSeperator("separator2", "0 = Don't limit.")
 					}
+				},
+				new Menu("drawing", "Drawing Menu")
+				{
+					new MenuList("colorscheme", "Color Scheme", new []{"Bold", "Flat", "Feminine"})
 				}
 			};
 

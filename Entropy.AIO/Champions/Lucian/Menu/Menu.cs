@@ -126,14 +126,14 @@
 				}
 			};
 
-			var drawingsMenu = new SDK.UI.Menu("drawing", "Drawing")
+			var drawingsMenu = BaseMenu.Root["drawing"].As<SDK.UI.Menu>();
 			{
-				new MenuBool("q", "Q Range", false),
-				new MenuBool("qextended", "Extended Q Range"),
-				new MenuBool("w", "W Range", false),
-				new MenuBool("e", "E Range", false),
-				new MenuBool("r", "R Range", false)
-			};
+				drawingsMenu.Add(new MenuBool("q", "Q Range", false));
+				drawingsMenu.Add(new MenuBool("qextended", "Extended Q Range"));
+				drawingsMenu.Add(new MenuBool("w", "W Range", false));
+				drawingsMenu.Add(new MenuBool("e", "E Range", false));
+				drawingsMenu.Add(new MenuBool("r", "R Range", false));
+			}
 
 			var menuList = new[]
 			{
@@ -144,8 +144,7 @@
 				jungleClearMenu,
 				structureClearMenu,
 				antiGapcloserMenu,
-				miscellaneousMenu,
-				drawingsMenu
+				miscellaneousMenu
 			};
 
 			foreach (var menu in menuList)
