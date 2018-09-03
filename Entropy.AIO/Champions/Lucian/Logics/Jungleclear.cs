@@ -1,8 +1,6 @@
 ﻿namespace Entropy.AIO.Champions.Lucian.Logics
 {
-	using System.Linq;
 	using General;
-	using SDK.Caching;
 	using SDK.Damage;
 	using SDK.Extensions.Geometry;
 	using SDK.Extensions.Objects;
@@ -13,8 +11,7 @@
 	{
 		public static void E(OnPostAttackEventArgs args)
 		{
-			if (!ObjectCache.JungleMinions.Contains(args.Target) ||
-			    args.Target.HP < LocalPlayer.Instance.GetAutoAttackDamage(args.Target as AIBaseClient) * 3)
+			if (args.Target.HP < LocalPlayer.Instance.GetAutoAttackDamage(args.Target as AIBaseClient) * 3)
 			{
 				return;
 			}
@@ -29,8 +26,7 @@
 
 		public static void Q(OnPostAttackEventArgs args)
 		{
-			if (!ObjectCache.JungleMinions.Contains(args.Target) ||
-			    args.Target.HP < LocalPlayer.Instance.GetAutoAttackDamage(args.Target as AIBaseClient) * 3)
+			if (args.Target.HP < LocalPlayer.Instance.GetAutoAttackDamage(args.Target as AIBaseClient) * 3)
 			{
 				return;
 			}
@@ -45,8 +41,7 @@
 
 		public static void W(OnPostAttackEventArgs args)
 		{
-			if (!ObjectCache.JungleMinions.Contains(args.Target) ||
-			    args.Target.HP < LocalPlayer.Instance.GetAutoAttackDamage(args.Target as AIBaseClient) * 3)
+			if (args.Target.HP < LocalPlayer.Instance.GetAutoAttackDamage(args.Target as AIBaseClient) * 3)
 			{
 				return;
 			}

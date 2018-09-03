@@ -70,13 +70,11 @@
 			{
 				new MenuSliderBool("q", "Use Q / If Mana >= x%", true, 50),
 				new MenuSliderBool("w", "Use W / If Mana >= x%", false, 50),
-				new MenuSliderBool("e", "Use E / If Mana >= x%", false, 50),
 
 				new SDK.UI.Menu("customization", "Customization")
 				{
 					new MenuSlider("q", "Use Q if hittable minions >= x", 3, 1, 5),
-					new MenuSlider("w", "Use W if hittable minions >= x", 3, 1, 5),
-					new MenuSlider("e", "Use E if minions around >= x", 3, 1, 5)
+					new MenuSlider("w", "Use W if hittable minions >= x", 3, 1, 5)
 				}
 			};
 

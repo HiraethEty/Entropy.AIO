@@ -6,7 +6,7 @@
 
 	internal class Drawings
 	{
-		private Spell[] Spells { get; set; }
+		private Spell[] Spells { get; }
 		public Drawings(Spell[] spells)
 		{
 			this.Spells = spells;
@@ -23,7 +23,8 @@
 			foreach (var spell in this.Spells)
 			{
 				if (!spell.Ready ||
-				    !BaseMenu.Root["drawing"][$"{spell.Slot.ToString().ToLower()}"].Enabled || BaseMenu.Root["drawing"][$"{spell.Slot.ToString().ToLower()}"] == null)
+				    !BaseMenu.Root["drawing"][$"{spell.Slot.ToString().ToLower()}"].Enabled ||
+				    BaseMenu.Root["drawing"][$"{spell.Slot.ToString().ToLower()}"] == null)
 				{
 					continue;
 				}

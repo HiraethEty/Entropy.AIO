@@ -4,7 +4,7 @@
 	using Enumerations;
 	using SharpDX;
 
-	class ColorScheme
+	internal class ColorScheme
 	{
 		public static List<Color[]> ColorSchemes = new List<Color[]>
 		{

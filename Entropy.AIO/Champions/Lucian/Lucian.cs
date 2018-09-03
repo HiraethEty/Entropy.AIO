@@ -1,4 +1,6 @@
-﻿using Entropy.SDK.Enumerations;
+﻿using System.Linq;
+using Entropy.SDK.Caching;
+using Entropy.SDK.Enumerations;
 using Entropy.SDK.Extensions.Objects;
 
 namespace Entropy.AIO.Champions.Lucian
@@ -76,25 +78,35 @@ namespace Entropy.AIO.Champions.Lucian
 				case OrbwalkingMode.LaneClear:
 					if (E.Ready)
 					{
-						Laneclear.E(args);
-						Jungleclear.E(args);
-
 						if (args.Target.IsStructure())
 						{
 							Structureclear.E(args);
+							return;
+						}
+
+						if (ObjectCache.JungleMinions.Contains(args.Target))
+						{
+							Jungleclear.E(args);
 							return;
 						}
 					}
 
 					if (Q.Ready)
 					{
-						Jungleclear.Q(args);
-						return;
+						if (ObjectCache.JungleMinions.Contains(args.Target))
+						{
+							Jungleclear.Q(args);
+							return;
+						}
 					}
 
 					if (W.Ready)
 					{
-						Jungleclear.W(args);
+						if (ObjectCache.JungleMinions.Contains(args.Target))
+						{
+							Jungleclear.W(args);
+							return;
+						}
 
 						if (args.Target.IsStructure())
 						{
