@@ -1,9 +1,12 @@
-﻿using Entropy.AIO.General;
-using Entropy.AIO.Utility;
-using Entropy.SDK.Extensions.Objects;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics.Laneclear
 {
+	using System.Linq;
+	using General;
+	using SDK.Caching;
+	using SDK.Extensions.Geometry;
+	using SDK.Extensions.Objects;
+	using Utility;
+
 	internal partial class Laneclear
 	{
 		public static void Q(EntropyEventArgs args)
@@ -12,14 +15,15 @@ namespace Entropy.AIO.Champions.Lucian.Logics
 			if (laneclearQMenu.Enabled &&
 			    LocalPlayer.Instance.MPPercent() > ManaManager.GetNeededMana(Champion.Q.Slot, laneclearQMenu))
 			{
-				/*
-				var farmLocation = SpellClass.Q2.GetLineFarmLocation(Extensions.GetEnemyLaneMinionsTargets(), SpellClass.Q2.Width);
-				if (farmLocation.MinionsHit >= MenuClass.Q["customization"]["laneclear"].Value)
+				var farmLocation = FarmManager.GetLinearFarmLocation(Champion.Q.Width * 2, Spells.Spells.ExtendedQ.Range);
+				if (farmLocation.MinionsHit >= BaseMenu.Root["laneClear"]["customization"]["q"].Value)
 				{
-				    SpellClass.Q.CastOnUnit(farmLocation.FirstMinion);
-				    return;
+					if (farmLocation.Position == null || !farmLocation.Position.IsValid)
+					{
+						return;
+					}
+					Champion.Q.CastOnUnit(farmLocation.Position);
 				}
-				*/
 			}
 		}
 	}

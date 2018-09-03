@@ -1,10 +1,10 @@
-﻿using Entropy.AIO.General;
-using Entropy.SDK.Events;
-using Entropy.SDK.Extensions.Geometry;
-using Entropy.SDK.Extensions.Objects;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics.AntiGapcloser
 {
+	using General;
+	using SDK.Events;
+	using SDK.Extensions.Geometry;
+	using SDK.Extensions.Objects;
+
 	internal class AntiGapcloser
 	{
 		public static void Execute(Gapcloser.GapcloserArgs args)

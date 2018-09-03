@@ -1,14 +1,16 @@
-﻿using System.Linq;
-using Entropy.AIO.General;
-using Entropy.SDK.Caching;
-using Entropy.SDK.Damage;
-using Entropy.SDK.Enumerations;
-using Entropy.SDK.Extensions;
-using Entropy.SDK.Extensions.Geometry;
-using Entropy.SDK.Extensions.Objects;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics.Combo
 {
+	using System.Linq;
+	using General;
+	using Misc;
+	using SDK.Caching;
+	using SDK.Damage;
+	using SDK.Enumerations;
+	using SDK.Extensions;
+	using SDK.Extensions.Geometry;
+	using SDK.Extensions.Objects;
+	using Champion = Champions.Champion;
+
 	internal partial class Combo
 	{
 		public static void R(EntropyEventArgs args)

@@ -1,8 +1,8 @@
-﻿using Entropy.SDK.Events;
-using Entropy.SDK.Orbwalking;
-
-namespace Entropy.AIO.Champions.Lucian
+﻿namespace Entropy.AIO.Champions.Lucian.Methods
 {
+	using SDK.Events;
+	using SDK.Orbwalking;
+
 	internal class Methods
 	{
 		public Methods()

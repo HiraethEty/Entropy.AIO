@@ -1,4 +1,4 @@
-﻿namespace Entropy.AIO.Champions.Lucian
+﻿namespace Entropy.AIO.Champions.Lucian.Spells
 {
 	using SDK.Extensions.Objects;
 	using SDK.Spells;

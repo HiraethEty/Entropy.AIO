@@ -1,11 +1,13 @@
-﻿using System.Linq;
-using Entropy.AIO.General;
-using Entropy.SDK.Caching;
-using Entropy.SDK.Damage;
-using Entropy.SDK.Extensions.Objects;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics.Killsteal
 {
+	using System.Linq;
+	using General;
+	using Misc;
+	using SDK.Caching;
+	using SDK.Damage;
+	using SDK.Extensions.Objects;
+	using Spells;
+
 	internal partial class Killsteal
 	{
 		public static void ExtendedQ(EntropyEventArgs args)

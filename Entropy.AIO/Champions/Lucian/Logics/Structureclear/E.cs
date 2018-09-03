@@ -1,12 +1,11 @@
-﻿
-using Entropy.AIO.General;
-using Entropy.AIO.Utility;
-using Entropy.SDK.Extensions.Geometry;
-using Entropy.SDK.Extensions.Objects;
-using Entropy.SDK.Orbwalking.EventArgs;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics.Structureclear
 {
+	using General;
+	using SDK.Extensions.Geometry;
+	using SDK.Extensions.Objects;
+	using SDK.Orbwalking.EventArgs;
+	using Utility;
+
 	internal partial class Structureclear
 	{
 		public static void E(OnPostAttackEventArgs args)

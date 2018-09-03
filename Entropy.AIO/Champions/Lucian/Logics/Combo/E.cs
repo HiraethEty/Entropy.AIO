@@ -1,11 +1,11 @@
-﻿using Entropy.AIO.General;
-using Entropy.AIO.Utilities;
-using Entropy.SDK.Damage;
-using Entropy.SDK.Extensions.Geometry;
-using Entropy.SDK.Extensions.Objects;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics.Combo
 {
+	using General;
+	using SDK.Damage;
+	using SDK.Extensions.Geometry;
+	using SDK.Extensions.Objects;
+	using Utilities;
+
 	internal partial class Combo
 	{
 		public static void E(EntropyEventArgs args)

@@ -1,15 +1,14 @@
-﻿
-using System.Linq;
-using Entropy.AIO.General;
-using Entropy.AIO.Utility;
-using Entropy.SDK.Caching;
-using Entropy.SDK.Damage;
-using Entropy.SDK.Extensions.Geometry;
-using Entropy.SDK.Extensions.Objects;
-using Entropy.SDK.Orbwalking.EventArgs;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics.Jungleclear
 {
+	using System.Linq;
+	using General;
+	using SDK.Caching;
+	using SDK.Damage;
+	using SDK.Extensions.Geometry;
+	using SDK.Extensions.Objects;
+	using SDK.Orbwalking.EventArgs;
+	using Utility;
+
 	internal partial class Jungleclear
 	{
 		public static void E(OnPostAttackEventArgs args)

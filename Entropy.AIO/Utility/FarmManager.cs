@@ -47,68 +47,68 @@
 				{
 					continue;
 				}
-				result = endPos;
+				result = pos;
 				minionCount = count;
 			}
 
-			return new FarmLocation(result, minionCount);
+			return new FarmLocation(ObjectCache.EnemyLaneMinions.OrderBy(x => x.Distance(result.To3D())).FirstOrDefault(), minionCount);
 		}
 
-		public static FarmLocation GetCircularFarmLocation(float width, float range, int useMECMax = 9)
-		{
-			var minionPositions = ObjectCache.EnemyLaneMinions.Select(minion => minion.Position.To2D()).ToList();
-
-			var result = new Vector2();
-			var minionCount = 0;
-			var startPos = LocalPlayer.Instance.Position.To2D();
-
-			range = range * range;
-
-			if (minionPositions.Count == 0)
-			{
-				return new FarmLocation(result, minionCount);
-			}
-
-			if (minionPositions.Count <= useMECMax)
-			{
-				var subGroups = GetCombinations(minionPositions);
-				foreach (var subGroup in subGroups)
-				{
-					if (subGroup.Count <= 0)
-					{
-						continue;
-					}
-					var circle = MEC.GetMec(subGroup);
-
-					if (!(circle.Radius <= width) || !(circle.Center.DistanceSquared(startPos) <= range))
-					{
-						continue;
-					}
-					minionCount = subGroup.Count;
-					return new FarmLocation(circle.Center, minionCount);
-				}
-			}
-			else
-			{
-				foreach (var pos in minionPositions)
-				{
-					if (!(pos.DistanceSquared(startPos) <= range))
-					{
-						continue;
-					}
-					var count = minionPositions.Count(pos2 => pos.DistanceSquared(pos2) <= width * width);
-
-					if (count < minionCount)
-					{
-						continue;
-					}
-					result = pos;
-					minionCount = count;
-				}
-			}
-
-			return new FarmLocation(result, minionCount);
-		}
+//		public static FarmLocation GetCircularFarmLocation(float width, float range, int useMECMax = 9)
+//		{
+//			var minionPositions = ObjectCache.EnemyLaneMinions.Select(minion => minion.Position.To2D()).ToList();
+//
+//			var result = new Vector2();
+//			var minionCount = 0;
+//			var startPos = LocalPlayer.Instance.Position.To2D();
+//
+//			range = range * range;
+//
+//			if (minionPositions.Count == 0)
+//			{
+//				return new FarmLocation(result, minionCount);
+//			}
+//
+//			if (minionPositions.Count <= useMECMax)
+//			{
+//				var subGroups = GetCombinations(minionPositions);
+//				foreach (var subGroup in subGroups)
+//				{
+//					if (subGroup.Count <= 0)
+//					{
+//						continue;
+//					}
+//					var circle = MEC.GetMec(subGroup);
+//
+//					if (!(circle.Radius <= width) || !(circle.Center.DistanceSquared(startPos) <= range))
+//					{
+//						continue;
+//					}
+//					minionCount = subGroup.Count;
+//					return new FarmLocation(circle.Center, minionCount);
+//				}
+//			}
+//			else
+//			{
+//				foreach (var pos in minionPositions)
+//				{
+//					if (!(pos.DistanceSquared(startPos) <= range))
+//					{
+//						continue;
+//					}
+//					var count = minionPositions.Count(pos2 => pos.DistanceSquared(pos2) <= width * width);
+//
+//					if (count < minionCount)
+//					{
+//						continue;
+//					}
+//					result = pos;
+//					minionCount = count;
+//				}
+//			}
+//
+//			return new FarmLocation(result, minionCount);
+//		}
 
 		private static IEnumerable<List<Vector2>> GetCombinations(IReadOnlyCollection<Vector2> allValues)
 		{
@@ -134,7 +134,7 @@
 			/// <summary>
 			///     The position
 			/// </summary>
-			public Vector2 Position;
+			public AIMinionClient Position;
 
 			#endregion
 
@@ -145,7 +145,7 @@
 			/// </summary>
 			/// <param name="position">The position.</param>
 			/// <param name="minionsHit">The minions hit.</param>
-			public FarmLocation(Vector2 position, int minionsHit)
+			public FarmLocation(AIMinionClient position, int minionsHit)
 			{
 				this.Position = position;
 				this.MinionsHit = minionsHit;

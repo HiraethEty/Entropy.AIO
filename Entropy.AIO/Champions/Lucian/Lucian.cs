@@ -1,10 +1,19 @@
-﻿using Entropy.AIO.Champions.Lucian.Logics;
-using Entropy.SDK.Enumerations;
+﻿using Entropy.SDK.Enumerations;
 using Entropy.SDK.Events;
 using Entropy.SDK.Utils;
 
 namespace Entropy.AIO.Champions.Lucian
 {
+	using Logics.AntiGapcloser;
+	using Logics.Automatic;
+	using Logics.Combo;
+	using Logics.Harass;
+	using Logics.Jungleclear;
+	using Logics.Killsteal;
+	using Logics.Laneclear;
+	using Logics.Structureclear;
+	using Logics.Weaving;
+	using Misc;
 	using SDK.Orbwalking;
 	using SDK.Orbwalking.EventArgs;
 
@@ -12,9 +21,10 @@ namespace Entropy.AIO.Champions.Lucian
 	{
 		public Lucian()
 		{
-			Spells.Initialize();
-			Menu.Initialize();
-			Methods.Initialize();
+			Spells.Spells.Initialize();
+			Menu.Menu.Initialize();
+			Methods.Methods.Initialize();
+			this.DamageValues = new Damage(new[] {Q, Spells.Spells.ExtendedQ, W, E, R});
 		}
 
 		public static void OnWndProc(GameWndProcEventArgs args)

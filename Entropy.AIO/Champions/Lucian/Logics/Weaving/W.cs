@@ -1,8 +1,8 @@
-﻿using Entropy.AIO.General;
-using Entropy.SDK.Orbwalking.EventArgs;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics.Weaving
 {
+	using General;
+	using SDK.Orbwalking.EventArgs;
+
 	internal partial class Weaving
 	{
 		public static void W(OnPostAttackEventArgs args)

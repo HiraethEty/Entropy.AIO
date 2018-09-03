@@ -1,9 +1,9 @@
-﻿using Entropy.AIO.General;
-using Entropy.AIO.Utility;
-using Entropy.SDK.Extensions.Objects;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics.Laneclear
 {
+	using General;
+	using SDK.Extensions.Objects;
+	using Utility;
+
 	internal partial class Laneclear
 	{
 		public static void W(EntropyEventArgs args)

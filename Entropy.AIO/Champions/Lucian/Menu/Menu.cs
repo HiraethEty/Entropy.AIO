@@ -1,4 +1,4 @@
-﻿namespace Entropy.AIO.Champions.Lucian
+﻿namespace Entropy.AIO.Champions.Lucian.Menu
 {
 	using System.Linq;
 	using General;

@@ -10,6 +10,6 @@
 		internal static Spell E { get; set; }
 		internal static Spell R { get; set; }
 
-		internal static BaseDamage DamageValues { get; set; }
+		internal BaseDamage DamageValues { get; set; }
 	}
 }

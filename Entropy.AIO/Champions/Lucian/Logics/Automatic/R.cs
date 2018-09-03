@@ -1,15 +1,16 @@
-﻿using System.Linq;
-using Entropy.AIO.General;
-using Entropy.SDK.Caching;
-using Entropy.SDK.Damage;
-using Entropy.SDK.Extensions;
-using Entropy.SDK.Extensions.Geometry;
-using Entropy.SDK.Extensions.Objects;
-using Entropy.SDK.Orbwalking;
-using Entropy.SDK.UI.Components;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics.Automatic
 {
+	using System.Linq;
+	using General;
+	using Misc;
+	using SDK.Caching;
+	using SDK.Damage;
+	using SDK.Extensions;
+	using SDK.Extensions.Geometry;
+	using SDK.Extensions.Objects;
+	using SDK.Orbwalking;
+	using SDK.UI.Components;
+
 	internal class Automatic
 	{
 		public static void SemiAutomaticR(GameWndProcEventArgs args)

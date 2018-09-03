@@ -105,9 +105,11 @@
     <Compile Include="General\BaseLogic.cs" />
     <Compile Include="General\BaseMenu.cs" />
     <Compile Include="General\ChampionLoader.cs" />
+    <Compile Include="General\MEC.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\Extensions.cs" />
+    <Compile Include="Utility\FarmManager.cs" />
     <Compile Include="Utility\ManaManager.cs" />
     <Compile Include="Utility\Utilities.cs" />
   </ItemGroup>

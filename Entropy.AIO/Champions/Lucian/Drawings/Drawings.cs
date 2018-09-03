@@ -1,8 +1,5 @@
-﻿namespace Entropy.AIO.Champions.Lucian
+﻿namespace Entropy.AIO.Champions.Lucian.Drawings
 {
-	using Enumerations;
-	using General;
-
 	internal class Drawings
 	{
 		public Drawings()

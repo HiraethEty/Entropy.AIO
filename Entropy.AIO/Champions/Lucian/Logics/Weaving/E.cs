@@ -1,14 +1,13 @@
-﻿
-using System.Linq;
-using Entropy.AIO.General;
-using Entropy.SDK.Caching;
-using Entropy.SDK.Extensions.Geometry;
-using Entropy.SDK.Extensions.Objects;
-using Entropy.SDK.Orbwalking.EventArgs;
-using SharpDX;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics.Weaving
 {
+	using System.Linq;
+	using General;
+	using SDK.Caching;
+	using SDK.Extensions.Geometry;
+	using SDK.Extensions.Objects;
+	using SDK.Orbwalking.EventArgs;
+	using SharpDX;
+
 	internal partial class Weaving
 	{
 		public static void E(OnPostAttackEventArgs args)

@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using Entropy.AIO.General;
-using Entropy.AIO.Utilities;
-using Entropy.AIO.Utility;
-using Entropy.SDK.Extensions.Objects;
-
-namespace Entropy.AIO.Champions.Lucian.Logics
+﻿namespace Entropy.AIO.Champions.Lucian.Logics.Harass
 {
+	using System.Linq;
+	using General;
+	using SDK.Extensions.Objects;
+	using Utilities;
+	using Utility;
+
 	internal partial class Harass
 	{
 		public static void Q(EntropyEventArgs args)
