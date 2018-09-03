@@ -10,7 +10,7 @@
 			Initialize();
 		}
 
-		public static void Initialize()
+		private static void Initialize()
 		{
 			Tick.OnTick += Lucian.OnTick;
 			new CustomTick(2000).OnTick += Lucian.OnCustomTick;

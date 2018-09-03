@@ -41,7 +41,8 @@
 				},
 				new Menu("drawing", "Drawing Menu")
 				{
-					new MenuList("colorscheme", "Color Scheme", new[] {"Bold", "Flat", "Feminine"})
+					new MenuList("mode", "Drawing Mode", new []{"Riot", "SharpDX"}),
+					new MenuList("colorscheme", "Color Scheme", new[] {"Bold", "Flat", "Brazilian", "French", "Feminine"})
 				}
 			};
 

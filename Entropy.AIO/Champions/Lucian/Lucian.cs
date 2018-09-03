@@ -15,9 +15,9 @@ namespace Entropy.AIO.Champions.Lucian
 	{
 		public Lucian()
 		{
-			Spells.Initialize();
-			Menu.Initialize();
-			Methods.Initialize();
+			new Spells();
+			new Menu();
+			new Methods();
 			new Drawings(new[] {Q, W, E, R});
 		}
 

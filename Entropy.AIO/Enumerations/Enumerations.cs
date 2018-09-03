@@ -68,6 +68,24 @@
 			new Color(199, 236, 238)
 		};
 
+		public static readonly Color[] BrazilianColors =
+		{
+			new Color(0, 156, 55),
+			new Color(254, 224, 0),
+			new Color(0, 34, 119),
+			new Color(255, 255, 255),
+			new Color(0, 0, 0)
+		};
+
+		public static readonly Color[] FrenchColors =
+		{
+			new Color(255, 255, 255),
+			new Color(255, 255, 255),
+			new Color(255, 255, 255),
+			new Color(255, 255, 255),
+			new Color(255, 255, 255)
+		};
+
 		public static readonly Color[] Feminine =
 		{
 			new Color(255, 159, 243),

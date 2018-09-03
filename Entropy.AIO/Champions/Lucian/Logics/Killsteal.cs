@@ -2,7 +2,6 @@
 {
 	using System.Linq;
 	using General;
-	using Misc;
 	using SDK.Caching;
 	using SDK.Damage;
 	using SDK.Extensions.Objects;

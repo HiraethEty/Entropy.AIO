@@ -12,7 +12,7 @@
 			Initialize();
 		}
 
-		public static void Initialize()
+		private static void Initialize()
 		{
 			Champion.Q = new Spell(SpellSlot.Q, 550f);
 			ExtendedQ = new Spell(SpellSlot.Q, 950f - LocalPlayer.Instance.BoundingRadius);

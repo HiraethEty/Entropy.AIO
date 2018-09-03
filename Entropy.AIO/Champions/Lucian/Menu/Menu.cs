@@ -14,7 +14,7 @@
 			Initialize();
 		}
 
-		public static void Initialize()
+		private static void Initialize()
 		{
 			var comboMenu = new SDK.UI.Menu("combo", "Combo")
 			{

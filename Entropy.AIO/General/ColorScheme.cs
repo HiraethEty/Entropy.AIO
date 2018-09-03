@@ -6,10 +6,12 @@
 
 	internal class ColorScheme
 	{
-		public static List<Color[]> ColorSchemes = new List<Color[]>
+		public static readonly List<Color[]> ColorSchemes = new List<Color[]>
 		{
 			Enumerations.BoldColors,
 			Enumerations.FlatColors,
+			Enumerations.BrazilianColors,
+			Enumerations.FrenchColors,
 			Enumerations.Feminine
 		};
 	}

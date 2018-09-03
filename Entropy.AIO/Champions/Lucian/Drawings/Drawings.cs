@@ -3,7 +3,7 @@
 	using General;
 	using SDK.Spells;
 
-	internal class Drawings
+	internal class Drawings : BaseDrawing
 	{
 		private Spell[] Spells { get; }
 
@@ -18,7 +18,7 @@
 			var colorScheme = ColorScheme.ColorSchemes[BaseMenu.Root["drawing"]["colorscheme"].Value];
 			if (Champions.Lucian.Spells.ExtendedQ.Ready && BaseMenu.Root["drawing"]["qextended"].Enabled)
 			{
-				Renderer.DrawCircularRangeIndicator(LocalPlayer.Instance.Position, this.Spells[1].Range, colorScheme[4]);
+				DrawCircle(LocalPlayer.Instance.Position, this.Spells[1].Range, colorScheme[4]);
 			}
 
 			foreach (var spell in this.Spells)
@@ -30,7 +30,7 @@
 					continue;
 				}
 
-				Renderer.DrawCircularRangeIndicator(LocalPlayer.Instance.Position, spell.Range, colorScheme[(int) spell.Slot]);
+				DrawCircle(LocalPlayer.Instance.Position, spell.Range, colorScheme[(int) spell.Slot]);
 			}
 		}
 	}
