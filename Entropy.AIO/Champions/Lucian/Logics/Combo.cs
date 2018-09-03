@@ -9,7 +9,7 @@
 	using SDK.Extensions.Geometry;
 	using SDK.Extensions.Objects;
 	using Utilities;
-	using Champion = Champions.Champion;
+	using Champion = Champion;
 
 	internal class Combo
 	{
