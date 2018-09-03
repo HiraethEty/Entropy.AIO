@@ -1,4 +1,4 @@
-﻿namespace Entropy.AIO.Champions.Lucian.Logics.Automatic
+﻿namespace Entropy.AIO.Champions.Lucian.Logics
 {
 	using System.Linq;
 	using General;

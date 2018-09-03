@@ -1,4 +1,4 @@
-﻿namespace Entropy.AIO.Champions.Lucian.Logics.AntiGapcloser
+﻿namespace Entropy.AIO.Champions.Lucian.Logics
 {
 	using General;
 	using SDK.Events;
@@ -7,9 +7,9 @@
 
 	internal class AntiGapcloser
 	{
-		public static void Execute(Gapcloser.GapcloserArgs args)
+		public static void E(Gapcloser.GapcloserArgs args)
 		{
-			if (LocalPlayer.Instance.IsDead || !Champion.E.Ready)
+			if (LocalPlayer.Instance.IsDead)
 			{
 				return;
 			}
@@ -32,11 +32,6 @@
 				return;
 			}
 
-			OnGapcloser(args);
-		}
-
-		private static void OnGapcloser(Gapcloser.GapcloserArgs args)
-		{
 			switch (args.Type)
 			{
 				case SpellType.Targeted:

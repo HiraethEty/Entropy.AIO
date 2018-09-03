@@ -1,30 +1,23 @@
 ﻿using Entropy.SDK.Enumerations;
-using Entropy.SDK.Events;
-using Entropy.SDK.Utils;
+using Entropy.SDK.Extensions.Objects;
 
 namespace Entropy.AIO.Champions.Lucian
 {
-	using Logics.AntiGapcloser;
-	using Logics.Automatic;
-	using Logics.Combo;
-	using Logics.Harass;
-	using Logics.Jungleclear;
-	using Logics.Killsteal;
-	using Logics.Laneclear;
-	using Logics.Structureclear;
-	using Logics.Weaving;
 	using Misc;
 	using SDK.Orbwalking;
+	using SDK.Events;
+	using SDK.Utils;
 	using SDK.Orbwalking.EventArgs;
+	using Logics;
 
 	internal sealed class Lucian : Champion
 	{
 		public Lucian()
 		{
-			Spells.Spells.Initialize();
-			Menu.Menu.Initialize();
-			Methods.Methods.Initialize();
-			this.DamageValues = new Damage(new[] {Q, Spells.Spells.ExtendedQ, W, E, R});
+			Spells.Initialize();
+			Menu.Initialize();
+			Methods.Initialize();
+			this.DamageValues = new Damage(new[] {Q, Spells.ExtendedQ, W, E, R});
 		}
 
 		public static void OnWndProc(GameWndProcEventArgs args)
@@ -34,7 +27,7 @@ namespace Entropy.AIO.Champions.Lucian
 
 		public static void OnNewGapcloser(Gapcloser.GapcloserArgs args)
 		{
-			AntiGapcloser.Execute(args);
+			AntiGapcloser.E(args);
 		}
 
 		public static void OnCustomTick(EntropyEventArgs args)
@@ -84,8 +77,12 @@ namespace Entropy.AIO.Champions.Lucian
 					{
 						Laneclear.E(args);
 						Jungleclear.E(args);
-						Structureclear.E(args);
-						return;
+
+						if (args.Target.IsStructure())
+						{
+							Structureclear.E(args);
+							return;
+						}
 					}
 
 					if (Q.Ready)
@@ -97,7 +94,11 @@ namespace Entropy.AIO.Champions.Lucian
 					if (W.Ready)
 					{
 						Jungleclear.W(args);
-						Structureclear.W(args);
+
+						if (args.Target.IsStructure())
+						{
+							Structureclear.W(args);
+						}
 					}
 					break;
 			}

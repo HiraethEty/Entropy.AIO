@@ -21,7 +21,7 @@
 		/// </summary>
 		/// <param name="unit">The unit.</param>
 		public static Rectangle QRectangle(AIBaseClient unit) => new Rectangle(LocalPlayer.Instance.Position,
-		                                                                       LocalPlayer.Instance.Position.Extend(unit.Position, Spells.Spells.ExtendedQ.Range),
-																			   Spells.Spells.ExtendedQ.Width);
+		                                                                       LocalPlayer.Instance.Position.Extend(unit.Position, Spells.ExtendedQ.Range),
+																			   Spells.ExtendedQ.Width);
 	}
 }
