@@ -32,7 +32,7 @@
 
 		private float WDamage(AIBaseClient target)
 		{
-			var wLevel = this.Spells[2].Level;
+			var wLevel = this.Spells[1].Level;
 
 			var wBaseDamage = new[] {85f, 125f, 165f, 205f, 245f}[wLevel - 1] + 0.9f * LocalPlayer.Instance.CharIntermediate.TotalAbilityDamage();
 
