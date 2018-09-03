@@ -17,7 +17,8 @@ namespace Entropy.AIO.Champions.Lucian
 			Spells.Initialize();
 			Menu.Initialize();
 			Methods.Initialize();
-			this.DamageValues = new Damage(new[] {Q, Spells.ExtendedQ, W, E, R});
+			this.DamageValues = new Damage(new[] {Q, W});
+			new Drawings.Drawings(new[] {Q, W, E, R});
 		}
 
 		public static void OnWndProc(GameWndProcEventArgs args)
