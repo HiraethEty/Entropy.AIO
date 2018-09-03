@@ -70,7 +70,7 @@ namespace Entropy.AIO.Champions.Lucian
 					break;
 
 				case OrbwalkingMode.LaneClear:
-					if (W.Ready)
+					if (E.Ready)
 					{
 						Laneclear.E(args);
 						Jungleclear.E(args);
