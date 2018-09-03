@@ -17,7 +17,7 @@
 		public static void Initialize()
 		{
 			Orbwalker.OnPreAttack += OnPreAttack;
-			Orbwalker.OnPostAttack += OnPostAttack;
+			//Orbwalker.OnPostAttack += OnPostAttack;
 			Spellbook.OnLocalCastSpell += OnLocalCastSpell;
 		}
 
@@ -74,6 +74,7 @@
 			}
 		}
 
+		/*
 		private static void OnPostAttack(OnPostAttackEventArgs args)
 		{
 			if (!LocalPlayer.Instance.IsMelee || args.Target.IsStructure())
@@ -91,7 +92,9 @@
 				}
 			}
 		}
+		*/
 
+		/*
 		private static void CastHydra(InventorySlot slot)
 		{
 			var hydraMenu = BaseMenu.Root["general"]["hydra"];
@@ -120,6 +123,7 @@
 				}
 			}
 		}
+		*/
 
 		private static void OnLocalCastSpell(SpellbookLocalCastSpellEventArgs args)
 		{

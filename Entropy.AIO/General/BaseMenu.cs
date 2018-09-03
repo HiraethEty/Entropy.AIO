@@ -46,6 +46,7 @@
 				Root["general"].As<Menu>().Add(new MenuBool("nomanagerifblue", "Ignore ManaManagers if you have Blue Buff", false));
 			}
 
+			/*
 			if (LocalPlayer.Instance.IsMelee)
 			{
 				var hydraMenu = new Menu("hydra", "Hydras Menu")
@@ -60,6 +61,7 @@
 
 				Root["general"].As<Menu>().Add(hydraMenu);
 			}
+			*/
 
 			foreach (var spellSlot in Enumerations.SpellSlots)
 			{
