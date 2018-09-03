@@ -32,7 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Entropy">
+    <Reference Include="Entropy, Version=1.0.0.0, Culture=neutral, PublicKeyToken=82986faa26f76839, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Entropy\System\Entropy.dll</HintPath>
     </Reference>
     <Reference Include="Entropy.Sandbox">
@@ -40,7 +41,7 @@
     </Reference>
     <Reference Include="Entropy.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a9dd01c7a904d443, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Documents\Entropy-Dev\Entropy.SDK\Build\Release\Entropy.SDK.dll</HintPath>
+      <HintPath>D:\Entropy\System\Entropy.SDK.dll</HintPath>
     </Reference>
     <Reference Include="Entropy.ToolKit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=167639b368a1a0ae, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -71,26 +72,38 @@
   <ItemGroup>
     <Compile Include="Bootstrap.cs" />
     <Compile Include="Champions\Champion.cs" />
+    <Compile Include="Champions\Lucian\Logics\AntiGapcloser\E.cs" />
+    <Compile Include="Champions\Lucian\Logics\Automatic\R.cs" />
+    <Compile Include="Champions\Lucian\Logics\Combo\E.cs" />
+    <Compile Include="Champions\Lucian\Logics\Combo\R.cs" />
+    <Compile Include="Champions\Lucian\Logics\Harass\ExtendedQ.cs" />
+    <Compile Include="Champions\Lucian\Logics\Harass\Q.cs" />
+    <Compile Include="Champions\Lucian\Logics\Harass\W.cs" />
+    <Compile Include="Champions\Lucian\Logics\Jungleclear\E.cs" />
+    <Compile Include="Champions\Lucian\Logics\Jungleclear\Q.cs" />
+    <Compile Include="Champions\Lucian\Logics\Jungleclear\W.cs" />
+    <Compile Include="Champions\Lucian\Logics\Killsteal\ExtendedQ.cs" />
+    <Compile Include="Champions\Lucian\Logics\Killsteal\Q.cs" />
+    <Compile Include="Champions\Lucian\Logics\Killsteal\W.cs" />
+    <Compile Include="Champions\Lucian\Logics\Laneclear\E.cs" />
+    <Compile Include="Champions\Lucian\Logics\Laneclear\Q.cs" />
+    <Compile Include="Champions\Lucian\Logics\Laneclear\W.cs" />
+    <Compile Include="Champions\Lucian\Logics\Structureclear\E.cs" />
+    <Compile Include="Champions\Lucian\Logics\Structureclear\W.cs" />
+    <Compile Include="Champions\Lucian\Logics\Weaving\E.cs" />
+    <Compile Include="Champions\Lucian\Logics\Weaving\Q.cs" />
+    <Compile Include="Champions\Lucian\Logics\Weaving\W.cs" />
+    <Compile Include="Champions\Lucian\Methods\Methods.cs" />
     <Compile Include="Champions\Lucian\Misc\Damage.cs" />
-    <Compile Include="Champions\Lucian\Drawings\Drawing.cs" />
+    <Compile Include="Champions\Lucian\Drawings\Drawings.cs" />
     <Compile Include="Champions\Lucian\Lucian.cs" />
     <Compile Include="Champions\Lucian\Menu\Menu.cs" />
     <Compile Include="Champions\Lucian\Misc\Definitions.cs" />
-    <Compile Include="Champions\Lucian\Spells\E.cs" />
-    <Compile Include="Champions\Lucian\Spells\ExtendedQ.cs" />
-    <Compile Include="Champions\Lucian\Spells\Q.cs" />
-    <Compile Include="Champions\Lucian\Spells\R.cs" />
-    <Compile Include="Champions\Lucian\Spells\W.cs" />
-    <Compile Include="Champions\Vayne\Spells\E.cs" />
-    <Compile Include="Champions\Vayne\Spells\Q.cs" />
-    <Compile Include="Champions\Vayne\Spells\R.cs" />
-    <Compile Include="Champions\Vayne\Spells\W.cs" />
-    <Compile Include="Champions\Vayne\Vayne.cs" />
+    <Compile Include="Champions\Lucian\Spells\Spells.cs" />
     <Compile Include="Enumerations\Enumerations.cs" />
     <Compile Include="General\BaseDamage.cs" />
     <Compile Include="General\BaseLogic.cs" />
     <Compile Include="General\BaseMenu.cs" />
-    <Compile Include="General\BaseSpell.cs" />
     <Compile Include="General\ChampionLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,9 +115,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Champions\Vayne\Drawings\" />
-    <Folder Include="Champions\Vayne\Menu\" />
-    <Folder Include="Champions\Vayne\Misc\" />
     <Folder Include="Managers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

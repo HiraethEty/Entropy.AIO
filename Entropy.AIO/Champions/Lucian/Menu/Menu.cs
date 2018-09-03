@@ -1,4 +1,4 @@
-﻿namespace Entropy.AIO.Champions.Lucian.Menu
+﻿namespace Entropy.AIO.Champions.Lucian
 {
 	using System.Linq;
 	using General;
@@ -11,10 +11,10 @@
 	{
 		public Menu()
 		{
-			LoadMenu();
+			Initialize();
 		}
 
-		public static void LoadMenu()
+		public static void Initialize()
 		{
 			var comboMenu = new SDK.UI.Menu("combo", "Combo")
 			{
@@ -51,20 +51,20 @@
 				}
 			};
 
+			var harassWhitelistMenu = harassMenu["whitelists"];
+			foreach (var enemy in ObjectCache.EnemyHeroes)
+			{
+				harassWhitelistMenu["normalQ"].As<SDK.UI.Menu>().Add(new MenuBool(enemy.CharName.ToLower(), $"Normal Q on: {enemy.CharName}"));
+				harassWhitelistMenu["extendedQ"].As<SDK.UI.Menu>().Add(new MenuBool(enemy.CharName.ToLower(), $"Extended Q on: {enemy.CharName}"));
+				harassWhitelistMenu["w"].As<SDK.UI.Menu>().Add(new MenuBool(enemy.CharName.ToLower(), $"W on: {enemy.CharName}"));
+			}
+
 			var killStealMenu = new SDK.UI.Menu("killSteal", "KillSteal")
 			{
 				new MenuBool("normalQ", "Use Normal Q"),
 				new MenuBool("extendedQ", "Use Extended Q"),
 				new MenuBool("w", "Use W")
 			};
-
-			var harassWhitelistMenu = harassMenu["whitelists"];
-			foreach (var enemy in ObjectCache.EnemyHeroes)
-			{
-				harassWhitelistMenu["normalQ"].As<SDK.UI.Menu>().Add(new MenuBool(enemy.CharName, $"Normal Q on: {enemy.CharName}"));
-				harassWhitelistMenu["extendedQ"].As<SDK.UI.Menu>().Add(new MenuBool(enemy.CharName, $"Extended Q on: {enemy.CharName}"));
-				harassWhitelistMenu["w"].As<SDK.UI.Menu>().Add(new MenuBool(enemy.CharName, $"W on: {enemy.CharName}"));
-			}
 
 			var laneClearMenu = new SDK.UI.Menu("laneClear", "Lane Clear")
 			{

@@ -1,20 +1,18 @@
-﻿namespace Entropy.AIO.Champions.Lucian.Drawings
+﻿namespace Entropy.AIO.Champions.Lucian
 {
 	using Enumerations;
 	using General;
-	using SDK.Spells;
 
-	internal class Drawing
+	internal class Drawings
 	{
-		private Spell[] Spells { get; }
-		public Drawing(Spell[] spells)
+		public Drawings()
 		{
-			this.Spells = spells;
 			Renderer.OnRender += this.OnRender;
 		}
 
 		private void OnRender(EntropyEventArgs args)
 		{
+			/*
 			if (this.Spells[1].Ready && BaseMenu.Root["drawing"]["qextended"].Enabled)
 			{
 				Renderer.DrawCircularRangeIndicator(LocalPlayer.Instance.Position, this.Spells[1].Range, Enumerations.Colors[4]);
@@ -30,6 +28,7 @@
 
 				Renderer.DrawCircularRangeIndicator(LocalPlayer.Instance.Position, spell.Range, Enumerations.Colors[(int)spell.Slot]);
 			}
+			*/
 		}
 	}
 }
