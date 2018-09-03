@@ -51,7 +51,7 @@
 				minionCount = count;
 			}
 
-			return new FarmLocation(ObjectCache.EnemyLaneMinions.OrderBy(x => x.Distance(result.To3D())).FirstOrDefault(), minionCount);
+			return new FarmLocation(result, minionCount);
 		}
 
 //		public static FarmLocation GetCircularFarmLocation(float width, float range, int useMECMax = 9)
@@ -134,7 +134,7 @@
 			/// <summary>
 			///     The position
 			/// </summary>
-			public AIMinionClient Position;
+			public Vector2 Position;
 
 			#endregion
 
@@ -145,7 +145,7 @@
 			/// </summary>
 			/// <param name="position">The position.</param>
 			/// <param name="minionsHit">The minions hit.</param>
-			public FarmLocation(AIMinionClient position, int minionsHit)
+			public FarmLocation(Vector2 position, int minionsHit)
 			{
 				this.Position = position;
 				this.MinionsHit = minionsHit;

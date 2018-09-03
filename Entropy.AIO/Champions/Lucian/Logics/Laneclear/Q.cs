@@ -18,11 +18,7 @@
 				var farmLocation = FarmManager.GetLinearFarmLocation(Champion.Q.Width * 2, Spells.Spells.ExtendedQ.Range);
 				if (farmLocation.MinionsHit >= BaseMenu.Root["laneClear"]["customization"]["q"].Value)
 				{
-					if (farmLocation.Position == null || !farmLocation.Position.IsValid)
-					{
-						return;
-					}
-					Champion.Q.CastOnUnit(farmLocation.Position);
+					Champion.Q.Cast(farmLocation.Position);
 				}
 			}
 		}
