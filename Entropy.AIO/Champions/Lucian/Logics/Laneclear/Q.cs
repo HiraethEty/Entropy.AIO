@@ -1,9 +1,10 @@
-﻿namespace Entropy.AIO.Champions.Lucian.Logics.Laneclear
+﻿using System.Linq;
+using Entropy.SDK.Caching;
+using Entropy.SDK.Extensions.Geometry;
+
+namespace Entropy.AIO.Champions.Lucian.Logics.Laneclear
 {
-	using System.Linq;
 	using General;
-	using SDK.Caching;
-	using SDK.Extensions.Geometry;
 	using SDK.Extensions.Objects;
 	using Utility;
 
@@ -12,19 +13,26 @@
 		public static void Q(EntropyEventArgs args)
 		{
 			var laneclearQMenu = BaseMenu.Root["laneClear"]["q"];
-			if (laneclearQMenu.Enabled &&
-			    LocalPlayer.Instance.MPPercent() > ManaManager.GetNeededMana(Champion.Q.Slot, laneclearQMenu))
+			if (!laneclearQMenu.Enabled ||
+			    LocalPlayer.Instance.MPPercent() <= ManaManager.GetNeededMana(Champion.Q.Slot, laneclearQMenu))
 			{
-				var farmLocation = FarmManager.GetLinearFarmLocation(Champion.Q.Width * 2, Spells.Spells.ExtendedQ.Range);
-				if (farmLocation.MinionsHit >= BaseMenu.Root["laneClear"]["customization"]["q"].Value)
-				{
-					if (farmLocation.Position == null || !farmLocation.Position.IsValid)
-					{
-						return;
-					}
-					Champion.Q.CastOnUnit(farmLocation.Position);
-				}
+				return;
 			}
+
+			var minions = ObjectCache.EnemyLaneMinions.Where(m => m.IsValidUnit() && m.DistanceToPlayer() <= Spells.Spells.ExtendedQ.Range).ToList();
+			var minionToAttack = minions.FirstOrDefault(m => m.DistanceToPlayer() <= Champion.Q.Range);
+			if (minionToAttack == null)
+			{
+				return;
+			}
+
+			var farmLocation = Spells.Spells.ExtendedQ.GetLineFarmLocation(minions, Spells.Spells.ExtendedQ.Width);
+			if (farmLocation.MinionsHit < BaseMenu.Root["laneClear"]["customization"]["q"].Value)
+			{
+				return;
+			}
+
+			Champion.Q.CastOnUnit(minionToAttack);
 		}
 	}
 }
